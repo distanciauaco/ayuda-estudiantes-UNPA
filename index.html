@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 7.3.7.2 (Linux)"/>
+	<meta name="created" content="2026-06-23T14:57:19.353314208"/>
+	<meta name="changed" content="2026-06-23T14:58:24.072268302"/>
+</head>
+<body lang="es-AR" dir="ltr"><p>&lt;!DOCTYPE html&gt;</p>
+<p>&lt;html lang=&quot;es&quot;&gt;</p>
+<p>&lt;head&gt;</p>
+<p>&lt;meta charset=&quot;UTF-8&quot;&gt;</p>
+<p>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,
+initial-scale=1.0&quot;&gt;</p>
+<p>&lt;title&gt;Ayuda Estudiantil UNPA&lt;/title&gt;</p>
+<p>&lt;style&gt;</p>
+<p>  * { margin: 0; padding: 0; box-sizing: border-box; }</p>
+<p>  :root {</p>
+<p>    --cian: #5fa8a8;</p>
+<p>    --cian-light: #a8d4d4;</p>
+<p>    --cian-dark: #3d8080;</p>
+<p>    --cian-soft: #e8f4f4;</p>
+<p>    --text: #2c3e3e;</p>
+<p>    --gray: #f0f7f7;</p>
+<p>  }</p>
+<p>  body { font-family: 'Segoe UI', sans-serif; background:
+var(--gray); color: var(--text); }</p>
+<p><br/>
+<br/>
+
+</p>
+<p>  header {</p>
+<p>    background: linear-gradient(135deg, var(--cian-dark),
+var(--cian));</p>
+<p>    color: white; text-align: center; padding: 40px 20px 30px;</p>
+<p>  }</p>
+<p>  header h1 { font-size: 2rem; margin-bottom: 8px; }</p>
+<p>  header p { font-size: 1rem; opacity: 0.9; }</p>
+<p><br/>
+<br/>
+
+</p>
+<p>  .search-bar {</p>
+<p>    display: flex; justify-content: center; margin-top: 20px;</p>
+<p>  }</p>
+<p>  .search-bar input {</p>
+<p>    width: 100%; max-width: 480px; padding: 12px 18px;</p>
+<p>    border: none; border-radius: 30px 0 0 30px; font-size: 1rem;
+outline: none;</p>
+<p>  }</p>
+<p>  .search-bar button {</p>
+<p>    padding: 12px 20px; background: var(--cian-dark); color:
+white;</p>
+<p>    border: none; border-radius: 0 30px 30px 0; cursor: pointer;
+font-size: 1rem;</p>
+<p>  }</p>
+<p><br/>
+<br/>
+
+</p>
+<p>  .tabs {</p>
+<p>    display: flex; justify-content: center; gap: 16px;</p>
+<p>    padding: 30px 20px 0;</p>
+<p>  }</p>
+<p>  .tab-btn {</p>
+<p>    padding: 12px 28px; border: 2px solid var(--cian);</p>
+<p>    background: white; color: var(--cian-dark); border-radius:
+30px;</p>
+<p>    cursor: pointer; font-size: 1rem; font-weight: 600;
+transition: all 0.2s;</p>
+<p>  }</p>
+<p>  .tab-btn.active, .tab-btn:hover {</p>
+<p>    background: var(--cian); color: white;</p>
+<p>  }</p>
+<p><br/>
+<br/>
+
+</p>
+<p>  .content { max-width: 860px; margin: 24px auto; padding: 0 20px
+60px; }</p>
+<p><br/>
+<br/>
+
+</p>
+<p>  .section { display: none; }</p>
+<p>  .section.active { display: block; }</p>
+<p><br/>
+<br/>
+
+</p>
+<p>  .section-title {</p>
+<p>    font-size: 1.3rem; font-weight: 700; color: var(--cian-dark);</p>
+<p>    margin-bottom: 16px; display: flex; align-items: center; gap:
+10px;</p>
+<p>  }</p>
+<p><br/>
+<br/>
+
+</p>
+<p>  .accordion {</p>
+<p>    background: white; border-radius: 14px; margin-bottom: 14px;</p>
+<p>    box-shadow: 0 2px 8px rgba(95,168,168,0.12); overflow: hidden;</p>
+<p>  }</p>
+<p>  .accordion-header {</p>
+<p>    display: flex; justify-content: space-between; align-items:
+center;</p>
+<p>    padding: 18px 22px; cursor: pointer; font-weight: 600;
+font-size: 1rem;</p>
+<p>    color: var(--text); transition: background 0.2s;</p>
+<p>  }</p>
+<p>  .accordion-header:hover { background: var(--cian-soft); }</p>
+<p>  .accordion-header .icon { font-size: 1.3rem; margin-right: 10px;
+}</p>
+<p>  .accordion-header .arrow { font-size: 1.1rem; color:
+var(--cian); transition: transform 0.3s; }</p>
+<p>  .accordion-header.open .arrow { transform: rotate(180deg); }</p>
+<p><br/>
+<br/>
+
+</p>
+<p>  .accordion-body {</p>
+<p>    display: none; padding: 0 22px 20px; border-top: 1px solid
+var(--cian-soft);</p>
+<p>  }</p>
+<p>  .accordion-body.open { display: block; }</p>
+<p><br/>
+<br/>
+
+</p>
+<p>  .steps { list-style: none; margin-top: 12px; }</p>
+<p>  .steps li {</p>
+<p>    display: flex; gap: 14px; margin-bottom: 12px; align-items:
+flex-start;</p>
+<p>  }</p>
+<p>  .step-num {</p>
+<p>    min-width: 28px; height: 28px; background: var(--cian);</p>
+<p>    color: white; border-radius: 50%; display: flex; align-items:
+center;</p>
+<p>    justify-content: center; font-weight: 700; font-size: 0.85rem;
+margin-top: 1px;</p>
+<p>  }</p>
+<p>  .step-text { font-size: 0.95rem; line-height: 1.5; }</p>
+<p><br/>
+<br/>
+
+</p>
+<p>  .tooltip-word {</p>
+<p>    border-bottom: 2px dashed var(--cian);</p>
+<p>    cursor: help;</p>
+<p>    position: relative;</p>
+<p>    display: inline-block;</p>
+<p>    font-weight: 600;</p>
+<p>  }</p>
+<p>  .tooltip-word .tooltip-box {</p>
+<p>    visibility: hidden;</p>
+<p>    opacity: 0;</p>
+<p>    background: var(--cian-dark);</p>
+<p>    color: white;</p>
+<p>    text-align: left;</p>
+<p>    padding: 10px 14px;</p>
+<p>    border-radius: 10px;</p>
+<p>    font-size: 0.85rem;</p>
+<p>    font-weight: 400;</p>
+<p>    width: 240px;</p>
+<p>    position: absolute;</p>
+<p>    bottom: 130%;</p>
+<p>    left: 50%;</p>
+<p>    transform: translateX(-50%);</p>
+<p>    transition: opacity 0.2s;</p>
+<p>    z-index: 100;</p>
+<p>    line-height: 1.4;</p>
+<p>    box-shadow: 0 4px 12px rgba(0,0,0,0.2);</p>
+<p>  }</p>
+<p>  .tooltip-word:hover .tooltip-box {</p>
+<p>    visibility: visible;</p>
+<p>    opacity: 1;</p>
+<p>  }</p>
+<p>  .tip {</p>
+<p>    background: var(--cian-soft); border-left: 4px solid
+var(--cian);</p>
+<p>    padding: 10px 14px; border-radius: 0 8px 8px 0;</p>
+<p>    font-size: 0.88rem; margin-top: 12px; color: var(--cian-dark);</p>
+<p>  }</p>
+<p><br/>
+<br/>
+
+</p>
+<p>  footer {</p>
+<p>    text-align: center; padding: 20px;</p>
+<p>    font-size: 0.85rem; color: #888;</p>
+<p>    border-top: 1px solid var(--cian-light);</p>
+<p>    background: white;</p>
+<p>  }</p>
+<p>&lt;/style&gt;</p>
+<p>&lt;/head&gt;</p>
+<p>&lt;body&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>&lt;header&gt;</p>
+<p>  &lt;h1&gt;🎓 Centro de Ayuda Estudiantil&lt;/h1&gt;</p>
+<p>  &lt;p&gt;Universidad Nacional de la Patagonia Austral · Resolvé
+tus dudas fácil y rápido&lt;/p&gt;</p>
+<p>  &lt;div class=&quot;search-bar&quot;&gt;</p>
+<p>    &lt;input type=&quot;text&quot; id=&quot;searchInput&quot;
+placeholder=&quot;¿Qué necesitás saber?&quot;
+oninput=&quot;filterAccordions()&quot;&gt;</p>
+<p>    &lt;button&gt;🔍&lt;/button&gt;</p>
+<p>  &lt;/div&gt;</p>
+<p>&lt;/header&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>&lt;div class=&quot;tabs&quot;&gt;</p>
+<p>  &lt;button class=&quot;tab-btn active&quot;
+onclick=&quot;showTab('bimodal', this)&quot;&gt;📘 &lt;span
+class=&quot;tooltip-word&quot;&gt;UNPAbimodal&lt;span
+class=&quot;tooltip-box&quot;&gt;Entorno virtual donde podrás
+acceder a las aulas virtuales y todo lo relacionado a los contenidos
+y temas de cada asignatura.&lt;/span&gt;&lt;/span&gt;&lt;/button&gt;</p>
+<p>  &lt;button class=&quot;tab-btn&quot; onclick=&quot;showTab('guarani',
+this)&quot;&gt;🎓 &lt;span class=&quot;tooltip-word&quot;&gt;SIU
+Guaraní&lt;span class=&quot;tooltip-box&quot;&gt;Sistema que permite
+gestionar y registrar todas tus actividades académicas durante toda
+la cursada hasta tu egreso.&lt;/span&gt;&lt;/span&gt;&lt;/button&gt;</p>
+<p>&lt;/div&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>&lt;div class=&quot;content&quot;&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>  &lt;!-- BIMODAL --&gt;</p>
+<p>  &lt;div class=&quot;section active&quot; id=&quot;bimodal&quot;&gt;</p>
+<p>    &lt;div class=&quot;section-title&quot;&gt;📘 Guías de
+&lt;span class=&quot;tooltip-word&quot;&gt;UNPAbimodal&lt;span
+class=&quot;tooltip-box&quot;&gt;Entorno virtual donde podrás
+acceder a las aulas virtuales y todo lo relacionado a los contenidos
+y temas de cada asignatura.&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    &lt;div class=&quot;accordion&quot;&gt;</p>
+<p>      &lt;div class=&quot;accordion-header&quot;
+onclick=&quot;toggle(this)&quot;&gt;</p>
+<p>        &lt;span&gt;&lt;span class=&quot;icon&quot;&gt;📤&lt;/span&gt;Cómo
+subir una tarea&lt;/span&gt;</p>
+<p>        &lt;span class=&quot;arrow&quot;&gt;▼&lt;/span&gt;</p>
+<p>      &lt;/div&gt;</p>
+<p>      &lt;div class=&quot;accordion-body&quot;&gt;</p>
+<p>        &lt;ol class=&quot;steps&quot;&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;1&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Ingresá a &lt;strong&gt;UNPA
+Bimodal&lt;/strong&gt; con tu &lt;strong&gt;número de
+legajo&lt;/strong&gt; como usuario y tu contraseña. &lt;em&gt;La
+primera vez que ingreses, tu contraseña será tu número de
+DNI.&lt;/em&gt;&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;2&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Entrá a la asignatura desde la
+sección &lt;strong&gt;&quot;Mis Cursos&quot;&lt;/strong&gt;.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;3&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Buscá la sección de
+&lt;strong&gt;Tareas&lt;/strong&gt;, identificada con un
+&lt;strong&gt;maletín azul&lt;/strong&gt;.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;4&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Hacé clic en la tarea y luego en
+&lt;strong&gt;&quot;Agregar entrega&quot;&lt;/strong&gt;.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;5&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Subí tu archivo o escribí tu
+respuesta según el tipo de entrega.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;6&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Hacé clic en &lt;strong&gt;&quot;Guardar
+cambios&quot;&lt;/strong&gt; y confirmá la entrega.&lt;/div&gt;&lt;/li&gt;</p>
+<p>        &lt;/ol&gt;</p>
+<p>        &lt;div class=&quot;tip&quot;&gt;💡 Verificá el formato
+y tamaño de archivo permitido antes de subir.&lt;/div&gt;</p>
+<p>        &lt;div style=&quot;margin-top:16px;&quot;&gt;</p>
+<p>          &lt;a href=&quot;https://youtube.com/shorts/ZtZUOGzTC0Y&quot;
+target=&quot;_blank&quot;
+style=&quot;display:inline-flex;align-items:center;gap:10px;background:#ff0000;color:white;padding:12px
+20px;border-radius:30px;text-decoration:none;font-weight:600;font-size:0.95rem;&quot;&gt;▶
+Ver video tutorial en YouTube&lt;/a&gt;</p>
+<p>        &lt;/div&gt;</p>
+<p>      &lt;/div&gt;</p>
+<p>    &lt;/div&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    &lt;div class=&quot;accordion&quot;&gt;</p>
+<p>      &lt;div class=&quot;accordion-header&quot;
+onclick=&quot;toggle(this)&quot;&gt;</p>
+<p>        &lt;span&gt;&lt;span class=&quot;icon&quot;&gt;📝&lt;/span&gt;Cómo
+resolver un cuestionario&lt;/span&gt;</p>
+<p>        &lt;span class=&quot;arrow&quot;&gt;▼&lt;/span&gt;</p>
+<p>      &lt;/div&gt;</p>
+<p>      &lt;div class=&quot;accordion-body&quot;&gt;</p>
+<p>        &lt;ol class=&quot;steps&quot;&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;1&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Buscá la actividad
+&lt;strong&gt;&quot;Cuestionario&quot;&lt;/strong&gt;, identificada
+con un &lt;strong&gt;maletín naranja&lt;/strong&gt;.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;2&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Leé las instrucciones: tiempo límite,
+intentos permitidos y puntaje.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;3&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Hacé clic en &lt;strong&gt;&quot;Intentar
+cuestionario ahora&quot;&lt;/strong&gt;.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;4&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Respondé todas las preguntas. Podés
+navegar entre ellas con los botones.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;5&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Al terminar, hacé clic en
+&lt;strong&gt;&quot;Terminar intento&quot;&lt;/strong&gt; y luego en
+&lt;strong&gt;&quot;Enviar todo y terminar&quot;&lt;/strong&gt;.&lt;/div&gt;&lt;/li&gt;</p>
+<p>        &lt;/ol&gt;</p>
+<p>        &lt;div class=&quot;tip&quot;&gt;💡 Si hay límite de
+tiempo, el cuestionario se envía automáticamente al agotarse.&lt;/div&gt;</p>
+<p>        &lt;div style=&quot;margin-top:16px;&quot;&gt;</p>
+<p>          &lt;a href=&quot;https://youtube.com/shorts/pl8VFBJ5iBE&quot;
+target=&quot;_blank&quot;
+style=&quot;display:inline-flex;align-items:center;gap:10px;background:#ff0000;color:white;padding:12px
+20px;border-radius:30px;text-decoration:none;font-weight:600;font-size:0.95rem;&quot;&gt;▶
+Ver video tutorial en YouTube&lt;/a&gt;</p>
+<p>        &lt;/div&gt;</p>
+<p>      &lt;/div&gt;</p>
+<p>    &lt;/div&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    &lt;div class=&quot;accordion&quot;&gt;</p>
+<p>      &lt;div class=&quot;accordion-header&quot;
+onclick=&quot;toggle(this)&quot;&gt;</p>
+<p>        &lt;span&gt;&lt;span class=&quot;icon&quot;&gt;💬&lt;/span&gt;Cómo
+usar los foros de comunicación&lt;/span&gt;</p>
+<p>        &lt;span class=&quot;arrow&quot;&gt;▼&lt;/span&gt;</p>
+<p>      &lt;/div&gt;</p>
+<p>      &lt;div class=&quot;accordion-body&quot;&gt;</p>
+<p>        &lt;p style=&quot;margin-bottom:14px;
+font-size:0.95rem;&quot;&gt;En UNPA Bimodal encontrarás &lt;strong&gt;tres
+tipos de foros&lt;/strong&gt;, cada uno con un propósito
+distinto:&lt;/p&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>        &lt;div
+style=&quot;background:var(--cian-soft);border-radius:10px;padding:14px
+16px;margin-bottom:12px;&quot;&gt;</p>
+<p>          &lt;div
+style=&quot;font-weight:700;color:var(--cian-dark);margin-bottom:4px;&quot;&gt;📋
+Foro de consultas a la Asistencia de Alumnos No Presenciales&lt;/div&gt;</p>
+<p>          &lt;div style=&quot;font-size:0.92rem;&quot;&gt;Usalo
+para consultar dudas sobre el uso de la plataforma (cómo subir una
+tarea, cómo ver una calificación, etc.) y para orientarte en
+trámites académico-administrativos.&lt;/div&gt;</p>
+<p>        &lt;/div&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>        &lt;div
+style=&quot;background:var(--cian-soft);border-radius:10px;padding:14px
+16px;margin-bottom:12px;&quot;&gt;</p>
+<p>          &lt;div
+style=&quot;font-weight:700;color:var(--cian-dark);margin-bottom:4px;&quot;&gt;👥
+Foro de estudiantes&lt;/div&gt;</p>
+<p>          &lt;div style=&quot;font-size:0.92rem;&quot;&gt;Espacio
+exclusivo para que los estudiantes se comuniquen entre sí. El
+docente no interviene en este foro.&lt;/div&gt;</p>
+<p>        &lt;/div&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>        &lt;div
+style=&quot;background:var(--cian-soft);border-radius:10px;padding:14px
+16px;margin-bottom:16px;&quot;&gt;</p>
+<p>          &lt;div
+style=&quot;font-weight:700;color:var(--cian-dark);margin-bottom:4px;&quot;&gt;🧑‍🏫
+Foro de consultas a los docentes&lt;/div&gt;</p>
+<p>          &lt;div style=&quot;font-size:0.92rem;&quot;&gt;Usalo
+para hacerle preguntas a tus profesores sobre la cursada,
+evaluaciones y contenidos de la materia.&lt;/div&gt;</p>
+<p>        &lt;/div&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>        &lt;div
+style=&quot;font-weight:600;color:var(--text);margin-bottom:10px;&quot;&gt;¿Cómo
+participar en un foro?&lt;/div&gt;</p>
+<p>        &lt;ol class=&quot;steps&quot;&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;1&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Entrá al curso y hacé clic en el
+foro que corresponda a tu consulta.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;2&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Para leer mensajes, hacé clic en el
+tema de discusión.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;3&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Para escribir, hacé clic en
+&lt;strong&gt;&quot;Añadir un nuevo tema&quot;&lt;/strong&gt; o en
+&lt;strong&gt;&quot;Responder&quot;&lt;/strong&gt; dentro de un hilo
+existente.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;4&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Escribí tu mensaje y hacé clic en
+&lt;strong&gt;&quot;Enviar al foro&quot;&lt;/strong&gt;.&lt;/div&gt;&lt;/li&gt;</p>
+<p>        &lt;/ol&gt;</p>
+<p>        &lt;div class=&quot;tip&quot;&gt;💡 Podés suscribirte
+al foro para recibir notificaciones por correo cuando haya nuevas
+respuestas.&lt;/div&gt;</p>
+<p>        &lt;div style=&quot;margin-top:16px;&quot;&gt;</p>
+<p>          &lt;a href=&quot;https://youtube.com/shorts/V8NUpUL6eN8&quot;
+target=&quot;_blank&quot;
+style=&quot;display:inline-flex;align-items:center;gap:10px;background:#ff0000;color:white;padding:12px
+20px;border-radius:30px;text-decoration:none;font-weight:600;font-size:0.95rem;&quot;&gt;▶
+Ver video tutorial en YouTube&lt;/a&gt;</p>
+<p>        &lt;/div&gt;</p>
+<p>      &lt;/div&gt;</p>
+<p>    &lt;/div&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    &lt;div class=&quot;accordion&quot;&gt;</p>
+<p>      &lt;div class=&quot;accordion-header&quot;
+onclick=&quot;toggle(this)&quot;&gt;</p>
+<p>        &lt;span&gt;&lt;span class=&quot;icon&quot;&gt;⭐&lt;/span&gt;Cómo
+ver las calificaciones&lt;/span&gt;</p>
+<p>        &lt;span class=&quot;arrow&quot;&gt;▼&lt;/span&gt;</p>
+<p>      &lt;/div&gt;</p>
+<p>      &lt;div class=&quot;accordion-body&quot;&gt;</p>
+<p>        &lt;ol class=&quot;steps&quot;&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;1&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Ingresá al curso
+correspondiente.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;2&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;En el menú lateral o superior, buscá
+&lt;strong&gt;&quot;Calificaciones&quot;&lt;/strong&gt;.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;3&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Ahí verás un resumen de todas tus
+notas y el estado de cada actividad.&lt;/div&gt;&lt;/li&gt;</p>
+<p>        &lt;/ol&gt;</p>
+<p>        &lt;div class=&quot;tip&quot;&gt;💡 Si una nota no
+aparece, es posible que el docente aún no la haya cargado.&lt;/div&gt;</p>
+<p>        &lt;div style=&quot;margin-top:16px;&quot;&gt;</p>
+<p>          &lt;a
+href=&quot;https://drive.google.com/file/d/1_D61uja-Z7O-7i2o-E-fHGmEjdgUbBpk/view?usp=sharing&quot;
+target=&quot;_blank&quot;
+style=&quot;display:inline-flex;align-items:center;gap:10px;background:#ff0000;color:white;padding:12px
+20px;border-radius:30px;text-decoration:none;font-weight:600;font-size:0.95rem;&quot;&gt;▶
+Ver video tutorial&lt;/a&gt;</p>
+<p>        &lt;/div&gt;</p>
+<p>      &lt;/div&gt;</p>
+<p>    &lt;/div&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    &lt;div class=&quot;accordion&quot;&gt;</p>
+<p>      &lt;div class=&quot;accordion-header&quot;
+onclick=&quot;toggle(this)&quot;&gt;</p>
+<p>        &lt;span&gt;&lt;span class=&quot;icon&quot;&gt;📋&lt;/span&gt;Cómo
+consultar el programa de la asignatura&lt;/span&gt;</p>
+<p>        &lt;span class=&quot;arrow&quot;&gt;▼&lt;/span&gt;</p>
+<p>      &lt;/div&gt;</p>
+<p>      &lt;div class=&quot;accordion-body&quot;&gt;</p>
+<p>        &lt;ol class=&quot;steps&quot;&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;1&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Ingresá a
+&lt;strong&gt;UNPAbimodal&lt;/strong&gt; con tu número de legajo y
+contraseña.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;2&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Entrá a la asignatura desde
+&lt;strong&gt;&quot;Mis Cursos&quot;&lt;/strong&gt;.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;3&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Buscá el programa en el primer bloque
+llamado &lt;strong&gt;&quot;Cuestiones
+Generales&quot;&lt;/strong&gt;.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;4&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Si no está allí, buscalo en el
+bloque de &lt;strong&gt;&quot;Presentación&quot;&lt;/strong&gt;.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;5&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Hacé clic en el archivo para
+descargarlo. Los programas generalmente incluyen el &lt;strong&gt;año
+de vigencia&lt;/strong&gt; en su nombre.&lt;/div&gt;&lt;/li&gt;</p>
+<p>        &lt;/ol&gt;</p>
+<p>        &lt;div class=&quot;tip&quot;&gt;💡 Si no encontrás el
+programa en ninguno de esos bloques, consultá al docente a través
+del foro de la materia.&lt;/div&gt;</p>
+<p>        &lt;div style=&quot;margin-top:16px;&quot;&gt;</p>
+<p>          &lt;a
+href=&quot;https://drive.google.com/file/d/1c4d_GC9sg0Ox5c_sNlWA6yEtvjBvUYBX/view?usp=sharing&quot;
+target=&quot;_blank&quot;
+style=&quot;display:inline-flex;align-items:center;gap:10px;background:#ff0000;color:white;padding:12px
+20px;border-radius:30px;text-decoration:none;font-weight:600;font-size:0.95rem;&quot;&gt;▶
+Ver video tutorial&lt;/a&gt;</p>
+<p>        &lt;/div&gt;</p>
+<p>      &lt;/div&gt;</p>
+<p>    &lt;/div&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    &lt;div class=&quot;accordion&quot;&gt;</p>
+<p>      &lt;div class=&quot;accordion-header&quot;
+onclick=&quot;toggle(this)&quot;&gt;</p>
+<p>        &lt;span&gt;&lt;span class=&quot;icon&quot;&gt;📥&lt;/span&gt;Cómo
+descargar los materiales de estudio&lt;/span&gt;</p>
+<p>        &lt;span class=&quot;arrow&quot;&gt;▼&lt;/span&gt;</p>
+<p>      &lt;/div&gt;</p>
+<p>      &lt;div class=&quot;accordion-body&quot;&gt;</p>
+<p>        &lt;div style=&quot;background:#fff3cd;border-left:4px
+solid #f0a500;padding:12px 16px;border-radius:0 8px 8px
+0;margin-bottom:16px;font-size:0.93rem;color:#7a5000;font-weight:600;&quot;&gt;</p>
+<p>          ⚠️ ¡Importante! Al finalizar el cuatrimestre se
+realiza un reseteo del aula virtual y los archivos son eliminados.
+Descargá y guardá todos los materiales que necesites antes de que
+termine el cuatrimestre.</p>
+<p>        &lt;/div&gt;</p>
+<p>        &lt;ol class=&quot;steps&quot;&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;1&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Ingresá a
+&lt;strong&gt;UNPAbimodal&lt;/strong&gt; y entrá a la asignatura
+desde &lt;strong&gt;&quot;Mis Cursos&quot;&lt;/strong&gt;.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;2&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Recorrés las secciones temáticas del
+aula y buscá los archivos disponibles (PDF, presentaciones, videos,
+etc.).&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;3&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Hacé clic en el archivo que querés
+descargar. Según el tipo, se abrirá en el navegador o se descargará
+automáticamente.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;4&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Para forzar la descarga, hacé clic
+derecho sobre el enlace y elegí &lt;strong&gt;&quot;Guardar enlace
+como&quot;&lt;/strong&gt;.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;5&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Guardá los archivos en tu computadora
+o en la nube (Google Drive, etc.) para tenerlos siempre
+disponibles.&lt;/div&gt;&lt;/li&gt;</p>
+<p>        &lt;/ol&gt;</p>
+<p>        &lt;div class=&quot;tip&quot;&gt;💡 Te recomendamos
+organizar los materiales por materia y unidad para encontrarlos
+fácilmente después.&lt;/div&gt;</p>
+<p>        &lt;div style=&quot;margin-top:16px;&quot;&gt;</p>
+<p>          &lt;a
+href=&quot;https://drive.google.com/file/d/1c4d_GC9sg0Ox5c_sNlWA6yEtvjBvUYBX/view?usp=sharing&quot;
+target=&quot;_blank&quot;
+style=&quot;display:inline-flex;align-items:center;gap:10px;background:#ff0000;color:white;padding:12px
+20px;border-radius:30px;text-decoration:none;font-weight:600;font-size:0.95rem;&quot;&gt;▶
+Ver video tutorial&lt;/a&gt;</p>
+<p>        &lt;/div&gt;</p>
+<p>      &lt;/div&gt;</p>
+<p>    &lt;/div&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>  &lt;/div&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>  &lt;!-- GUARANÍ --&gt;</p>
+<p>  &lt;div class=&quot;section&quot; id=&quot;guarani&quot;&gt;</p>
+<p>    &lt;div class=&quot;section-title&quot;&gt;🎓 Guías de
+&lt;span class=&quot;tooltip-word&quot;&gt;SIU Guaraní&lt;span
+class=&quot;tooltip-box&quot;&gt;Sistema que permite gestionar y
+registrar todas tus actividades académicas durante toda la cursada
+hasta tu egreso.&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    &lt;div class=&quot;accordion&quot;&gt;</p>
+<p>      &lt;div class=&quot;accordion-header&quot;
+onclick=&quot;toggle(this)&quot;&gt;</p>
+<p>        &lt;span&gt;&lt;span class=&quot;icon&quot;&gt;📚&lt;/span&gt;Cómo
+inscribir materias&lt;/span&gt;</p>
+<p>        &lt;span class=&quot;arrow&quot;&gt;▼&lt;/span&gt;</p>
+<p>      &lt;/div&gt;</p>
+<p>      &lt;div class=&quot;accordion-body&quot;&gt;</p>
+<p>        &lt;ol class=&quot;steps&quot;&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;1&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Ingresá al &lt;strong&gt;SIU
+Guaraní&lt;/strong&gt; en &lt;a
+href=&quot;http://guarani3w.uaco.unpa.edu.ar/G3w/www/inicial.php&quot;
+target=&quot;_blank&quot;
+style=&quot;color:var(--cian-dark);font-weight:600;&quot;&gt;este
+enlace&lt;/a&gt; con tu &lt;strong&gt;número de legajo&lt;/strong&gt;
+como usuario y tu contraseña. &lt;em&gt;La primera vez que ingreses,
+tu contraseña será tu número de DNI.&lt;/em&gt;&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;2&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Andá a &lt;strong&gt;Cursadas →
+Inscripción a cursadas&lt;/strong&gt;.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;3&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Verificá que estés dentro del
+período de inscripción. Si no es así, verás el mensaje &lt;em&gt;&quot;No
+hay comisiones para inscribirte&quot;&lt;/em&gt;.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;4&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Seleccioná las materias que querés
+cursar y la comisión correspondiente.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;5&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Confirmá la inscripción y guardá o
+imprimí el comprobante.&lt;/div&gt;&lt;/li&gt;</p>
+<p>        &lt;/ol&gt;</p>
+<p>        &lt;div class=&quot;tip&quot;&gt;💡 Consultá las fechas
+del período de inscripción en el &lt;a
+href=&quot;https://www.unpa.edu.ar/pagina/calendario-academico-2026&quot;
+target=&quot;_blank&quot;
+style=&quot;color:var(--cian-dark);font-weight:600;&quot;&gt;calendario
+académico publicado en el portal institucional de la UNPA
+UACO&lt;/a&gt;.&lt;/div&gt;</p>
+<p>      &lt;/div&gt;</p>
+<p>    &lt;/div&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    &lt;div class=&quot;accordion&quot;&gt;</p>
+<p>      &lt;div class=&quot;accordion-header&quot;
+onclick=&quot;toggle(this)&quot;&gt;</p>
+<p>        &lt;span&gt;&lt;span class=&quot;icon&quot;&gt;📄&lt;/span&gt;Cómo
+pedir certificado de alumno regular&lt;/span&gt;</p>
+<p>        &lt;span class=&quot;arrow&quot;&gt;▼&lt;/span&gt;</p>
+<p>      &lt;/div&gt;</p>
+<p>      &lt;div class=&quot;accordion-body&quot;&gt;</p>
+<p>        &lt;ol class=&quot;steps&quot;&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;1&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Ingresá al &lt;strong&gt;SIU
+Guaraní&lt;/strong&gt; con tu número de legajo y
+contraseña.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;2&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;En el panel de la izquierda, andá a
+&lt;strong&gt;Certificados → Pedido de
+certificados&lt;/strong&gt;.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;3&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Seleccioná el certificado que
+necesités.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;4&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Confirmá los datos y enviá la
+solicitud.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;5&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;El sistema te arrojará un número de
+transacción: &lt;em&gt;&quot;Pedido de Certificado se ha registrado
+correctamente con el Nro. de Transacción: 123456&quot;&lt;/em&gt;.
+Copiá ese número.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;6&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Enviá un mail a &lt;a
+href=&quot;mailto:registroacademicouaco@gmail.com&quot;
+style=&quot;color:var(--cian-dark);font-weight:600;&quot;&gt;registroacademicouaco@gmail.com&lt;/a&gt;
+indicando tu &lt;strong&gt;nombre completo&lt;/strong&gt;,
+&lt;strong&gt;número de DNI&lt;/strong&gt; y el &lt;strong&gt;número
+de transacción&lt;/strong&gt;.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;7&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;El certificado será enviado a tu
+correo electrónico.&lt;/div&gt;&lt;/li&gt;</p>
+<p>        &lt;/ol&gt;</p>
+<p>        &lt;div class=&quot;tip&quot;&gt;💡 Asegurate de tener
+actualizado tu correo electrónico en el SIU Guaraní para recibir el
+certificado sin problemas.&lt;/div&gt;</p>
+<p>        &lt;div style=&quot;margin-top:16px;&quot;&gt;</p>
+<p>          &lt;a
+href=&quot;https://drive.google.com/file/d/1hlKWaghukvKfd5zesIWKcyOyfWX71hrD/view?usp=sharing&quot;
+target=&quot;_blank&quot;
+style=&quot;display:inline-flex;align-items:center;gap:10px;background:#ff0000;color:white;padding:12px
+20px;border-radius:30px;text-decoration:none;font-weight:600;font-size:0.95rem;&quot;&gt;▶
+Ver video tutorial&lt;/a&gt;</p>
+<p>        &lt;/div&gt;</p>
+<p>      &lt;/div&gt;</p>
+<p>    &lt;/div&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    &lt;div class=&quot;accordion&quot;&gt;</p>
+<p>      &lt;div class=&quot;accordion-header&quot;
+onclick=&quot;toggle(this)&quot;&gt;</p>
+<p>        &lt;span&gt;&lt;span class=&quot;icon&quot;&gt;✏️&lt;/span&gt;Cómo
+inscribirse en mesas de examen&lt;/span&gt;</p>
+<p>        &lt;span class=&quot;arrow&quot;&gt;▼&lt;/span&gt;</p>
+<p>      &lt;/div&gt;</p>
+<p>      &lt;div class=&quot;accordion-body&quot;&gt;</p>
+<p>        &lt;ol class=&quot;steps&quot;&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;1&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Ingresá al SIU Guaraní con tu número
+de legajo y contraseña.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;2&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;En el panel de la izquierda, andá a
+&lt;strong&gt;Exámenes → Inscripción a
+exámenes&lt;/strong&gt;.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;3&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Verificá que estés dentro del
+período de inscripción. Si no es así, verás el mensaje &lt;em&gt;&quot;No
+existen materias en las que se pueda inscribir o no hay mesas de
+Examen definidas para las materias&quot;&lt;/em&gt;.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;4&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Seleccioná la materia y la fecha de
+mesa en que querés rendir.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;5&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Confirmá y guardá el comprobante de
+inscripción.&lt;/div&gt;&lt;/li&gt;</p>
+<p>        &lt;/ol&gt;</p>
+<p>        &lt;div class=&quot;tip&quot;&gt;💡 Verificá que tenés
+la regularidad vigente de la materia antes de inscribirte.&lt;/div&gt;</p>
+<p>      &lt;/div&gt;</p>
+<p>    &lt;/div&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    &lt;div class=&quot;accordion&quot;&gt;</p>
+<p>      &lt;div class=&quot;accordion-header&quot;
+onclick=&quot;toggle(this)&quot;&gt;</p>
+<p>        &lt;span&gt;&lt;span class=&quot;icon&quot;&gt;📊&lt;/span&gt;Cómo
+ver el historial académico&lt;/span&gt;</p>
+<p>        &lt;span class=&quot;arrow&quot;&gt;▼&lt;/span&gt;</p>
+<p>      &lt;/div&gt;</p>
+<p>      &lt;div class=&quot;accordion-body&quot;&gt;</p>
+<p>        &lt;ol class=&quot;steps&quot;&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;1&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Ingresá al SIU Guaraní con tu número
+de legajo y contraseña.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;2&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;En el panel de la izquierda, andá a
+&lt;strong&gt;Consultas → Historia Académica&lt;/strong&gt;.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;3&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Allí verás todas las materias que
+tenés aprobadas con su &lt;strong&gt;calificación&lt;/strong&gt; y
+la &lt;strong&gt;forma de aprobación&lt;/strong&gt;.&lt;/div&gt;&lt;/li&gt;</p>
+<p>        &lt;/ol&gt;</p>
+<p>      &lt;/div&gt;</p>
+<p>    &lt;/div&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    &lt;div class=&quot;accordion&quot;&gt;</p>
+<p>      &lt;div class=&quot;accordion-header&quot;
+onclick=&quot;toggle(this)&quot;&gt;</p>
+<p>        &lt;span&gt;&lt;span class=&quot;icon&quot;&gt;✉️&lt;/span&gt;Cómo
+cambiar el correo electrónico&lt;/span&gt;</p>
+<p>        &lt;span class=&quot;arrow&quot;&gt;▼&lt;/span&gt;</p>
+<p>      &lt;/div&gt;</p>
+<p>      &lt;div class=&quot;accordion-body&quot;&gt;</p>
+<p>        &lt;ol class=&quot;steps&quot;&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;1&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;Ingresá al SIU Guaraní con tu número
+de legajo y contraseña.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;2&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;En el panel de la izquierda, andá a
+&lt;strong&gt;Matrícula → Cambiar datos
+censales&lt;/strong&gt;.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;3&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;En el campo que dice
+&lt;strong&gt;&quot;Email&quot;&lt;/strong&gt;, escribí tu nuevo
+correo electrónico.&lt;/div&gt;&lt;/li&gt;</p>
+<p>          &lt;li&gt;&lt;div class=&quot;step-num&quot;&gt;4&lt;/div&gt;&lt;div
+class=&quot;step-text&quot;&gt;En la parte de abajo hacé clic en
+&lt;strong&gt;&quot;Grabar&quot;&lt;/strong&gt; hasta que aparezca el
+mensaje &lt;em&gt;&quot;Tus datos censales se actualizaron
+correctamente&quot;&lt;/em&gt;.&lt;/div&gt;&lt;/li&gt;</p>
+<p>        &lt;/ol&gt;</p>
+<p>        &lt;div class=&quot;tip&quot;&gt;💡 Usá un correo al
+que tengas acceso frecuente, ya que las notificaciones académicas y
+certificados se envían ahí.&lt;/div&gt;</p>
+<p>        &lt;div style=&quot;margin-top:16px;&quot;&gt;</p>
+<p>          &lt;a
+href=&quot;https://drive.google.com/file/d/1RjJ3uNmRgrnD8CwSzPbp01c6Kci957y1/view?usp=sharing&quot;
+target=&quot;_blank&quot;
+style=&quot;display:inline-flex;align-items:center;gap:10px;background:#ff0000;color:white;padding:12px
+20px;border-radius:30px;text-decoration:none;font-weight:600;font-size:0.95rem;&quot;&gt;▶
+Ver video tutorial&lt;/a&gt;</p>
+<p>        &lt;/div&gt;</p>
+<p>      &lt;/div&gt;</p>
+<p>    &lt;/div&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>  &lt;/div&gt;</p>
+<p>&lt;/div&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>&lt;footer&gt;</p>
+<p>  &lt;strong&gt;Universidad Nacional de la Patagonia
+Austral&lt;/strong&gt; · Unidad Académica Caleta Olivia&lt;br&gt;</p>
+<p>  Dirección de Educación a Distancia&lt;br&gt;</p>
+<p>  📞 (0297) 485-4888 Interno 119 &amp;nbsp;·&amp;nbsp; ✉️
+&lt;a href=&quot;mailto:info.distancia@uaco.unpa.edu.ar&quot;
+style=&quot;color:var(--cian-dark);&quot;&gt;info.distancia@uaco.unpa.edu.ar&lt;/a&gt;</p>
+<p>&lt;/footer&gt;</p>
+<p><br/>
+<br/>
+
+</p>
+<p>&lt;script&gt;</p>
+<p>  function showTab(id, btn) {</p>
+<p>    document.querySelectorAll('.section').forEach(s =&gt;
+s.classList.remove('active'));</p>
+<p>    document.querySelectorAll('.tab-btn').forEach(b =&gt;
+b.classList.remove('active'));</p>
+<p>    document.getElementById(id).classList.add('active');</p>
+<p>    btn.classList.add('active');</p>
+<p>  }</p>
+<p><br/>
+<br/>
+
+</p>
+<p>  function toggle(header) {</p>
+<p>    const body = header.nextElementSibling;</p>
+<p>    const isOpen = body.classList.contains('open');</p>
+<p>    document.querySelectorAll('.accordion-body').forEach(b =&gt;
+b.classList.remove('open'));</p>
+<p>    document.querySelectorAll('.accordion-header').forEach(h =&gt;
+h.classList.remove('open'));</p>
+<p>    if (!isOpen) { body.classList.add('open');
+header.classList.add('open'); }</p>
+<p>  }</p>
+<p><br/>
+<br/>
+
+</p>
+<p>  function filterAccordions() {</p>
+<p>    const q =
+document.getElementById('searchInput').value.toLowerCase();</p>
+<p>    document.querySelectorAll('.accordion').forEach(acc =&gt; {</p>
+<p>      const text = acc.innerText.toLowerCase();</p>
+<p>      acc.style.display = text.includes(q) ? '' : 'none';</p>
+<p>    });</p>
+<p>    // Show both sections when searching</p>
+<p>    if (q.length &gt; 0) {</p>
+<p>      document.querySelectorAll('.section').forEach(s =&gt;
+s.classList.add('active'));</p>
+<p>    } else {</p>
+<p>      document.querySelectorAll('.section').forEach(s =&gt;
+s.classList.remove('active'));</p>
+<p>      document.querySelector('.section').classList.add('active');</p>
+<p>    }</p>
+<p>  }</p>
+<p>&lt;/script&gt;</p>
+<p>&lt;/body&gt;</p>
+<p>&lt;/html&gt;</p>
+</body>
+</html>
