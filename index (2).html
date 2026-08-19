@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ayuda Estudiantil UNPA</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --cian: #5fa8a8;
+    --cian-light: #a8d4d4;
+    --cian-dark: #3d8080;
+    --cian-soft: #e8f4f4;
+    --text: #2c3e3e;
+    --gray: #f0f7f7;
+  }
+  body { font-family: 'Segoe UI', sans-serif; background: var(--gray); color: var(--text); }
+
+  header {
+    background: linear-gradient(135deg, var(--cian-dark), var(--cian));
+    color: white; text-align: center; padding: 40px 20px 30px;
+  }
+  header h1 { font-size: 2rem; margin-bottom: 8px; }
+  header p { font-size: 1rem; opacity: 0.9; }
+
+  .search-bar { display: flex; justify-content: center; margin-top: 20px; }
+  .search-bar input {
+    width: 100%; max-width: 480px; padding: 12px 18px;
+    border: none; border-radius: 30px 0 0 30px; font-size: 1rem; outline: none;
+  }
+  .search-bar button {
+    padding: 12px 20px; background: var(--cian-dark); color: white;
+    border: none; border-radius: 0 30px 30px 0; cursor: pointer; font-size: 1rem;
+  }
+
+  .tabs {
+    display: flex; justify-content: center; gap: 0;
+    padding: 0; background: var(--cian-dark); flex-wrap: nowrap; overflow-x: auto;
+  }
+  .tab-btn {
+    padding: 14px 18px; border: none; border-right: 1px solid rgba(255,255,255,0.15);
+    background: transparent; color: rgba(255,255,255,0.8);
+    cursor: pointer; font-size: 0.88rem; font-weight: 600; transition: all 0.2s;
+    white-space: nowrap; flex: 1;
+  }
+  .tab-btn:last-child { border-right: none; }
+  .tab-btn.active { background: var(--cian); color: white; }
+  .tab-btn:hover:not(.active) { background: rgba(255,255,255,0.12); color: white; }
+
+  .content { max-width: 860px; margin: 24px auto; padding: 0 20px 60px; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .section-title {
+    font-size: 1.3rem; font-weight: 700; color: var(--cian-dark);
+    margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+  }
+
+  .accordion {
+    background: white; border-radius: 14px; margin-bottom: 14px;
+    box-shadow: 0 2px 8px rgba(95,168,168,0.12); overflow: hidden;
+  }
+  .accordion-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 22px; cursor: pointer; font-weight: 600; font-size: 1rem;
+    color: var(--text); transition: background 0.2s;
+  }
+  .accordion-header:hover { background: var(--cian-soft); }
+  .accordion-header .icon { font-size: 1.3rem; margin-right: 10px; }
+  .accordion-header .arrow { font-size: 1.1rem; color: var(--cian); transition: transform 0.3s; }
+  .accordion-header.open .arrow { transform: rotate(180deg); }
+  .accordion-body { display: none; padding: 0 22px 20px; border-top: 1px solid var(--cian-soft); }
+  .accordion-body.open { display: block; }
+
+  .steps { list-style: none; margin-top: 12px; }
+  .steps li { display: flex; gap: 14px; margin-bottom: 12px; align-items: flex-start; }
+  .step-num {
+    min-width: 28px; height: 28px; background: var(--cian);
+    color: white; border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-weight: 700; font-size: 0.85rem; margin-top: 1px;
+  }
+  .step-text { font-size: 0.95rem; line-height: 1.5; }
+
+  .tooltip-word {
+    border-bottom: 2px dashed var(--cian); cursor: help;
+    position: relative; display: inline-block; font-weight: 600;
+  }
+  .tooltip-word .tooltip-box {
+    visibility: hidden; opacity: 0; background: var(--cian-dark); color: white;
+    text-align: left; padding: 10px 14px; border-radius: 10px;
+    font-size: 0.85rem; font-weight: 400; width: 240px;
+    position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%);
+    transition: opacity 0.2s; z-index: 100; line-height: 1.4;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+  .tooltip-word:hover .tooltip-box { visibility: visible; opacity: 1; }
+
+  .tip {
+    background: var(--cian-soft); border-left: 4px solid var(--cian);
+    padding: 10px 14px; border-radius: 0 8px 8px 0;
+    font-size: 0.88rem; margin-top: 12px; color: var(--cian-dark);
+  }
+  .alerta {
+    background: #fff3cd; border-left: 4px solid #f0a500;
+    padding: 12px 16px; border-radius: 0 8px 8px 0;
+    margin-bottom: 16px; font-size: 0.93rem; color: #7a5000; font-weight: 600;
+  }
+
+  /* --- PRIMEROS PASOS --- */
+  .pasos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+  @media(max-width:600px){ .pasos-grid { grid-template-columns: 1fr; } }
+  .paso-card {
+    background: white; border-radius: 14px; padding: 20px;
+    box-shadow: 0 2px 8px rgba(95,168,168,0.12);
+    border-top: 4px solid var(--cian); text-align: center;
+  }
+  .paso-card .paso-num {
+    width: 40px; height: 40px; background: var(--cian); color: white;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; font-weight: 700; margin: 0 auto 10px;
+  }
+  .paso-card h3 { font-size: 1rem; color: var(--cian-dark); margin-bottom: 6px; }
+  .paso-card p { font-size: 0.88rem; color: #555; line-height: 1.5; }
+
+  /* --- FAQ --- */
+  .faq-item { background: white; border-radius: 14px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(95,168,168,0.12); overflow: hidden; }
+  .faq-q {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 22px; cursor: pointer; font-weight: 600; font-size: 0.97rem;
+    color: var(--text); transition: background 0.2s;
+  }
+  .faq-q:hover { background: var(--cian-soft); }
+  .faq-q .arrow { color: var(--cian); transition: transform 0.3s; font-size: 1.1rem; }
+  .faq-q.open .arrow { transform: rotate(180deg); }
+  .faq-a { display: none; padding: 0 22px 16px; border-top: 1px solid var(--cian-soft); font-size: 0.93rem; line-height: 1.6; color: #444; }
+  .faq-a.open { display: block; }
+
+  /* --- GLOSARIO --- */
+  .gl-header { background: #04342C; border-radius: 12px; padding: 1.2rem 1.5rem; margin-bottom: 1.2rem; }
+  .gl-badge { display: inline-block; background: #1D9E75; color: #E1F5EE; font-size: 11px; padding: 3px 12px; border-radius: 20px; margin-bottom: 10px; letter-spacing: 1px; }
+  .gl-header h3 { margin: 0 0 4px; color: #fff; font-size: 18px; font-weight: bold; }
+  .gl-header p { margin: 0; color: #9FE1CB; font-size: 13px; }
+  .gl-filtros { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem; }
+  .gl-btn { background: #fff; color: #555; border: 1px solid #ccc; border-radius: 20px; padding: 5px 14px; font-size: 12px; cursor: pointer; font-family: 'Segoe UI', sans-serif; }
+  .gl-btn.activo { background: #04342C; color: #9FE1CB; border-color: #04342C; }
+  .gl-letras { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 1rem; }
+  .gl-letra { width: 26px; height: 26px; border-radius: 6px; border: 1px solid #5DCAA5; background: #fff; font-size: 12px; font-weight: bold; color: #04342C; cursor: pointer; }
+  .gl-letra:disabled { border-color: #eee; background: #f5f5f5; color: #ccc; cursor: default; }
+  .gl-contador { font-size: 12px; color: #888; margin-bottom: 0.75rem; }
+  .gl-card { border: 1px solid #ddd; border-radius: 10px; background: #f9f9f9; padding: 1rem 1.25rem; margin-bottom: 10px; border-left: 3px solid #5DCAA5; }
+  .gl-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+  .gl-nombre { margin: 0; font-size: 15px; font-weight: bold; color: #222; }
+  .gl-cat { font-size: 11px; padding: 2px 10px; border-radius: 20px; white-space: nowrap; }
+  .gl-def { margin: 0; font-size: 13px; color: #555; line-height: 1.6; }
+  .cat-plataforma { background: #E1F5EE; color: #085041; }
+  .cat-comunicacion { background: #E6F1FB; color: #0C447C; }
+  .cat-actividades { background: #FAEEDA; color: #633806; }
+  .cat-perfil { background: #EEEDFE; color: #3C3489; }
+  .cat-academico { background: #FCEBEB; color: #791F1F; }
+
+  /* --- TRÁMITES --- */
+  .tramite-card {
+    background: white; border-radius: 14px; margin-bottom: 14px;
+    box-shadow: 0 2px 8px rgba(95,168,168,0.12); overflow: hidden;
+  }
+  .tramite-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 22px; cursor: pointer; font-weight: 600; font-size: 1rem;
+    color: var(--text); transition: background 0.2s;
+  }
+  .tramite-header:hover { background: var(--cian-soft); }
+  .tramite-header .arrow { font-size: 1.1rem; color: var(--cian); transition: transform 0.3s; }
+  .tramite-header.open .arrow { transform: rotate(180deg); }
+  .tramite-body { display: none; padding: 0 22px 20px; border-top: 1px solid var(--cian-soft); }
+  .tramite-body.open { display: block; }
+  .tramite-tag {
+    display: inline-block; font-size: 11px; padding: 2px 10px;
+    border-radius: 20px; margin-left: 10px; vertical-align: middle;
+  }
+  .tag-bimodal { background: #E1F5EE; color: #085041; }
+  .tag-guarani { background: #E6F1FB; color: #0C447C; }
+
+  /* --- CONTACTO --- */
+  .contacto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media(max-width:600px){ .contacto-grid { grid-template-columns: 1fr; } }
+  .contacto-card {
+    background: white; border-radius: 14px; padding: 22px;
+    box-shadow: 0 2px 8px rgba(95,168,168,0.12); text-align: center;
+    border-top: 4px solid var(--cian);
+  }
+  .contacto-card .icono { font-size: 2rem; margin-bottom: 10px; }
+  .contacto-card h3 { font-size: 1rem; color: var(--cian-dark); margin-bottom: 8px; }
+  .contacto-card p, .contacto-card a { font-size: 0.9rem; color: #555; line-height: 1.7; text-decoration: none; }
+  .contacto-card a { color: var(--cian-dark); font-weight: 600; }
+  .btn-contacto {
+    display: inline-block; margin-top: 12px; padding: 10px 20px;
+    background: var(--cian); color: white; border-radius: 30px;
+    font-size: 0.9rem; font-weight: 600; text-decoration: none;
+  }
+
+  footer {
+    text-align: center; padding: 20px;
+    font-size: 0.85rem; color: #888;
+    border-top: 1px solid var(--cian-light); background: white;
+  }
+</style>
+</head>
+<body>
+
+<header style="padding:0;position:relative;overflow:hidden;min-height:260px;">
+  <img src="unpauaco.jpg" alt="Edificio UNPA UACO" style="width:100%;height:280px;object-fit:cover;object-position:center 60%;display:block;">
+  <div style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(4,52,44,0.35) 0%, rgba(4,52,44,0.75) 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 20px;text-align:center;">
+    <h1 style="color:white;font-size:2rem;margin-bottom:8px;text-shadow:0 2px 8px rgba(0,0,0,0.5);">🎓 Centro de Ayuda Estudiantil</h1>
+    <p style="color:#e0f5f0;font-size:1rem;margin-bottom:20px;text-shadow:0 1px 4px rgba(0,0,0,0.4);">Universidad Nacional de la Patagonia Austral · Unidad Académica Caleta Olivia</p>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="¿Qué necesitás saber?" oninput="filterAccordions()">
+      <button>🔍</button>
+    </div>
+  </div>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('ingresantes', this)">🌟 Ingresantes</button>
+  <button class="tab-btn" onclick="showTab('bimodal', this)">📘 <span class="tooltip-word">UNPAbimodal<span class="tooltip-box">Entorno virtual donde podrás acceder a las aulas virtuales y todo lo relacionado a los contenidos y temas de cada asignatura.</span></span></button>
+  <button class="tab-btn" onclick="showTab('guarani', this)">🎓 <span class="tooltip-word">SIU Guaraní<span class="tooltip-box">Sistema que permite gestionar y registrar todas tus actividades académicas durante toda la cursada hasta tu egreso.</span></span></button>
+  <button class="tab-btn" onclick="showTab('tramites', this)">📋 Trámites frecuentes</button>
+  <button class="tab-btn" onclick="showTab('faq', this)">❓ Preguntas frecuentes</button>
+  <button class="tab-btn" onclick="showTab('glosario', this)">📖 Glosario</button>
+  <button class="tab-btn" onclick="showTab('contacto', this)">📞 Contacto</button>
+</div>
+
+<div class="content">
+
+  <!-- ===== INGRESANTES ===== -->
+  <div class="section active" id="ingresantes">
+    <div class="section-title">🌟 Primeros pasos como estudiante virtual</div>
+
+    <div class="pasos-grid">
+      <div class="paso-card">
+        <div class="paso-num">1</div>
+        <h3>Conocé tu usuario</h3>
+        <p>Tu usuario en el Unpabimodal y en el SIU Guaraní es tu <strong>número de legajo</strong> universitario (ej: 1-25698789/26). No cambia durante toda tu carrera.</p>
+      </div>
+      <div class="paso-card">
+        <div class="paso-num">2</div>
+        <h3>Ingresá al Unpabimodal</h3>
+        <p>Accedé a <strong>unpabimodal.unpa.edu.ar</strong> con tu legajo y contraseña. La primera vez, tu contraseña es tu número de <strong>DNI</strong>.</p>
+      </div>
+      <div class="paso-card">
+        <div class="paso-num">3</div>
+        <h3>Ingresá al SIU Guaraní</h3>
+        <p>Accedé a <strong>guarani3w.uaco.unpa.edu.ar</strong> con tu legajo y contraseña (tu DNI la primera vez). Desde acá gestionás tus inscripciones y trámites.</p>
+      </div>
+      <div class="paso-card">
+        <div class="paso-num">4</div>
+        <h3>Cambiá tu contraseña</h3>
+        <p>La primera vez que ingreses a cada sistema, <strong>cambiá tu contraseña</strong> por una personal y segura. Guardalas en un lugar seguro.</p>
+      </div>
+      <div class="paso-card">
+        <div class="paso-num">5</div>
+        <h3>Actualizá tu correo</h3>
+        <p>En el SIU Guaraní, verificá que tu <strong>correo electrónico</strong> esté actualizado. Ahí recibirás notificaciones, certificados y comunicados.</p>
+      </div>
+      <div class="paso-card">
+        <div class="paso-num">6</div>
+        <h3>Explorá tu aula virtual</h3>
+        <p>Ingresá a tu curso en el Unpabimodal y recorrelo: materiales, foros, actividades y canales de consulta. ¡Familiarizate desde el primer día!</p>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:8px;">📅 Consultá el calendario académico</div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggle(this)">
+        <span><span class="icon">📅</span>¿Qué es el calendario académico y dónde lo encontrás?</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <p style="margin:12px 0;font-size:0.95rem;line-height:1.6;">El <strong>Calendario Académico</strong> es el documento oficial que establece todas las fechas clave del año universitario: inicio y fin de cuatrimestres, períodos de inscripción a materias y exámenes, recesos y mesas de examen.</p>
+        <ol class="steps">
+          <li><div class="step-num">1</div><div class="step-text">Ingresá al portal institucional de la UNPA.</div></li>
+          <li><div class="step-num">2</div><div class="step-text">Buscá la sección <strong>Calendario Académico</strong> o accedé directamente desde <a href="https://www.unpa.edu.ar/pagina/calendario-academico-2026" target="_blank" style="color:var(--cian-dark);font-weight:600;">este enlace</a>.</div></li>
+          <li><div class="step-num">3</div><div class="step-text">Descargalo y guardalo para consultar fechas importantes durante el año.</div></li>
+        </ol>
+        <div class="tip">💡 Revisá el calendario al inicio de cada cuatrimestre para organizar tus tiempos de estudio y no perderte inscripciones.</div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggle(this)">
+        <span><span class="icon">📖</span>¿Qué es el plan de estudios y dónde lo encontrás?</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <p style="margin:12px 0;font-size:0.95rem;line-height:1.6;">El <strong>Plan de Estudios</strong> es el documento que organiza todas las asignaturas de tu carrera, con sus correlativas y carga horaria. Te indica el orden en que debés cursar las materias.</p>
+        <ol class="steps">
+          <li><div class="step-num">1</div><div class="step-text">Ingresá al portal de la UNPA o consultá con la secretaría académica de la Unidad Académica Caleta Olivia.</div></li>
+          <li><div class="step-num">2</div><div class="step-text">Buscá tu carrera y descargá el plan de estudios vigente.</div></li>
+        </ol>
+        <div class="tip">💡 Revisá las correlativas antes de inscribirte a materias para asegurarte de cumplir con los requisitos.</div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggle(this)">
+        <span><span class="icon">📄</span>¿Qué es el programa de la asignatura?</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <p style="margin:12px 0;font-size:0.95rem;line-height:1.6;">El <strong>Programa de la asignatura</strong> es el documento elaborado por la cátedra que detalla los contenidos, objetivos, modalidad de evaluación, bibliografía y condiciones de aprobación. Es fundamental leerlo al inicio de cada cursada.</p>
+        <ol class="steps">
+          <li><div class="step-num">1</div><div class="step-text">Ingresá al Unpabimodal y accedé a la asignatura desde <strong>"Mis Cursos"</strong>.</div></li>
+          <li><div class="step-num">2</div><div class="step-text">Buscá el programa en el primer bloque llamado <strong>"Cuestiones Generales"</strong> o en <strong>"Presentación"</strong>.</div></li>
+          <li><div class="step-num">3</div><div class="step-text">Descargalo y leelo con atención: ahí están las condiciones para regularizar, promocionar o quedar libre.</div></li>
+        </ol>
+        <div class="tip">💡 Si no encontrás el programa, consultá al docente a través del foro de la materia.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== BIMODAL ===== -->
+  <div class="section" id="bimodal">
+    <div class="section-title">📘 Guías de <span class="tooltip-word">UNPAbimodal<span class="tooltip-box">Entorno virtual donde podrás acceder a las aulas virtuales y todo lo relacionado a los contenidos y temas de cada asignatura.</span></span></div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggle(this)">
+        <span><span class="icon">📤</span>Cómo subir una tarea</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <ol class="steps">
+          <li><div class="step-num">1</div><div class="step-text">Ingresá a <strong>UNPA Bimodal</strong> con tu <strong>número de legajo</strong> como usuario y tu contraseña. <em>La primera vez que ingreses, tu contraseña será tu número de DNI.</em></div></li>
+          <li><div class="step-num">2</div><div class="step-text">Entrá a la asignatura desde la sección <strong>"Mis Cursos"</strong>.</div></li>
+          <li><div class="step-num">3</div><div class="step-text">Buscá la sección de <strong>Tareas</strong>, identificada con un <strong>maletín azul</strong>.</div></li>
+          <li><div class="step-num">4</div><div class="step-text">Hacé clic en la tarea y luego en <strong>"Agregar entrega"</strong>.</div></li>
+          <li><div class="step-num">5</div><div class="step-text">Subí tu archivo o escribí tu respuesta según el tipo de entrega.</div></li>
+          <li><div class="step-num">6</div><div class="step-text">Hacé clic en <strong>"Guardar cambios"</strong> y confirmá la entrega.</div></li>
+        </ol>
+        <div class="tip">💡 Verificá el formato y tamaño de archivo permitido antes de subir.</div>
+        <div style="margin-top:16px;"><a href="https://youtube.com/shorts/ZtZUOGzTC0Y" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:#ff0000;color:white;padding:12px 20px;border-radius:30px;text-decoration:none;font-weight:600;font-size:0.95rem;">▶ Ver video tutorial en YouTube</a></div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggle(this)">
+        <span><span class="icon">📝</span>Cómo resolver un cuestionario</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <ol class="steps">
+          <li><div class="step-num">1</div><div class="step-text">Buscá la actividad <strong>"Cuestionario"</strong>, identificada con un <strong>maletín naranja</strong>.</div></li>
+          <li><div class="step-num">2</div><div class="step-text">Leé las instrucciones: tiempo límite, intentos permitidos y puntaje.</div></li>
+          <li><div class="step-num">3</div><div class="step-text">Hacé clic en <strong>"Intentar cuestionario ahora"</strong>.</div></li>
+          <li><div class="step-num">4</div><div class="step-text">Respondé todas las preguntas. Podés navegar entre ellas con los botones.</div></li>
+          <li><div class="step-num">5</div><div class="step-text">Al terminar, hacé clic en <strong>"Terminar intento"</strong> y luego en <strong>"Enviar todo y terminar"</strong>.</div></li>
+        </ol>
+        <div class="tip">💡 Si hay límite de tiempo, el cuestionario se envía automáticamente al agotarse.</div>
+        <div style="margin-top:16px;"><a href="https://youtube.com/shorts/pl8VFBJ5iBE" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:#ff0000;color:white;padding:12px 20px;border-radius:30px;text-decoration:none;font-weight:600;font-size:0.95rem;">▶ Ver video tutorial en YouTube</a></div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggle(this)">
+        <span><span class="icon">💬</span>Cómo participar en un foro</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <ol class="steps">
+          <li><div class="step-num">1</div><div class="step-text">Ingresá al curso y buscá la actividad de <strong>Foro</strong>.</div></li>
+          <li><div class="step-num">2</div><div class="step-text">Leé las instrucciones y los mensajes ya publicados.</div></li>
+          <li><div class="step-num">3</div><div class="step-text">Hacé clic en <strong>"Añadir un nuevo tema de debate"</strong> para publicar o en <strong>"Responder"</strong> en un mensaje existente.</div></li>
+          <li><div class="step-num">4</div><div class="step-text">Escribí tu mensaje y hacé clic en <strong>"Enviar al foro"</strong>.</div></li>
+        </ol>
+        <div class="tip">💡 Revisá la consigna antes de publicar y mantené un tono respetuoso en todo momento.</div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggle(this)">
+        <span><span class="icon">⭐</span>Cómo ver las calificaciones</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <ol class="steps">
+          <li><div class="step-num">1</div><div class="step-text">Ingresá al curso correspondiente.</div></li>
+          <li><div class="step-num">2</div><div class="step-text">En el menú lateral o superior, buscá <strong>"Calificaciones"</strong>.</div></li>
+          <li><div class="step-num">3</div><div class="step-text">Ahí verás un resumen de todas tus notas y el estado de cada actividad.</div></li>
+        </ol>
+        <div class="tip">💡 Si una nota no aparece, es posible que el docente aún no la haya cargado.</div>
+        <div style="margin-top:16px;"><a href="https://drive.google.com/file/d/1_D61uja-Z7O-7i2o-E-fHGmEjdgUbBpk/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:#ff0000;color:white;padding:12px 20px;border-radius:30px;text-decoration:none;font-weight:600;font-size:0.95rem;">▶ Ver video tutorial</a></div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggle(this)">
+        <span><span class="icon">📋</span>Cómo consultar el programa de la asignatura</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <ol class="steps">
+          <li><div class="step-num">1</div><div class="step-text">Ingresá a <strong>UNPAbimodal</strong> con tu número de legajo y contraseña.</div></li>
+          <li><div class="step-num">2</div><div class="step-text">Entrá a la asignatura desde <strong>"Mis Cursos"</strong>.</div></li>
+          <li><div class="step-num">3</div><div class="step-text">Buscá el programa en el primer bloque llamado <strong>"Cuestiones Generales"</strong>.</div></li>
+          <li><div class="step-num">4</div><div class="step-text">Si no está allí, buscalo en el bloque de <strong>"Presentación"</strong>.</div></li>
+          <li><div class="step-num">5</div><div class="step-text">Hacé clic en el archivo para descargarlo.</div></li>
+        </ol>
+        <div class="tip">💡 Si no encontrás el programa en ninguno de esos bloques, consultá al docente a través del foro de la materia.</div>
+        <div style="margin-top:16px;"><a href="https://drive.google.com/file/d/1c4d_GC9sg0Ox5c_sNlWA6yEtvjBvUYBX/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:#ff0000;color:white;padding:12px 20px;border-radius:30px;text-decoration:none;font-weight:600;font-size:0.95rem;">▶ Ver video tutorial</a></div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggle(this)">
+        <span><span class="icon">📥</span>Cómo descargar los materiales de estudio</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="alerta">⚠️ ¡Importante! Al finalizar el cuatrimestre se realiza un reseteo del aula virtual y los archivos son eliminados. Descargá y guardá todos los materiales que necesites antes de que termine el cuatrimestre.</div>
+        <ol class="steps">
+          <li><div class="step-num">1</div><div class="step-text">Ingresá a <strong>UNPAbimodal</strong> y entrá a la asignatura desde <strong>"Mis Cursos"</strong>.</div></li>
+          <li><div class="step-num">2</div><div class="step-text">Recorrés las secciones temáticas del aula y buscá los archivos disponibles.</div></li>
+          <li><div class="step-num">3</div><div class="step-text">Hacé clic en el archivo que querés descargar.</div></li>
+          <li><div class="step-num">4</div><div class="step-text">Para forzar la descarga, hacé clic derecho sobre el enlace y elegí <strong>"Guardar enlace como"</strong>.</div></li>
+          <li><div class="step-num">5</div><div class="step-text">Guardá los archivos en tu computadora o en la nube (Google Drive, etc.).</div></li>
+        </ol>
+        <div class="tip">💡 Te recomendamos organizar los materiales por materia y unidad para encontrarlos fácilmente después.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== GUARANÍ ===== -->
+  <div class="section" id="guarani">
+    <div class="section-title">🎓 Guías de <span class="tooltip-word">SIU Guaraní<span class="tooltip-box">Sistema que permite gestionar y registrar todas tus actividades académicas durante toda la cursada hasta tu egreso.</span></span></div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggle(this)">
+        <span><span class="icon">📚</span>Cómo inscribir materias</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <ol class="steps">
+          <li><div class="step-num">1</div><div class="step-text">Ingresá al <strong>SIU Guaraní</strong> en <a href="http://guarani3w.uaco.unpa.edu.ar/G3w/www/inicial.php" target="_blank" style="color:var(--cian-dark);font-weight:600;">este enlace</a> con tu número de legajo y contraseña.</div></li>
+          <li><div class="step-num">2</div><div class="step-text">Andá a <strong>Cursadas → Inscripción a cursadas</strong>.</div></li>
+          <li><div class="step-num">3</div><div class="step-text">Verificá que estés dentro del período de inscripción.</div></li>
+          <li><div class="step-num">4</div><div class="step-text">Seleccioná las materias que querés cursar y la comisión correspondiente.</div></li>
+          <li><div class="step-num">5</div><div class="step-text">Confirmá la inscripción y guardá el comprobante.</div></li>
+        </ol>
+        <div class="tip">💡 Consultá las fechas en el <a href="https://www.unpa.edu.ar/pagina/calendario-academico-2026" target="_blank" style="color:var(--cian-dark);font-weight:600;">calendario académico</a>.</div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggle(this)">
+        <span><span class="icon">📄</span>Cómo pedir certificado de alumno regular</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <ol class="steps">
+          <li><div class="step-num">1</div><div class="step-text">Ingresá al <strong>SIU Guaraní</strong> con tu número de legajo y contraseña.</div></li>
+          <li><div class="step-num">2</div><div class="step-text">Andá a <strong>Certificados → Pedido de certificados</strong>.</div></li>
+          <li><div class="step-num">3</div><div class="step-text">Seleccioná el certificado que necesités y confirmá.</div></li>
+          <li><div class="step-num">4</div><div class="step-text">Copiá el número de transacción que genera el sistema.</div></li>
+          <li><div class="step-num">5</div><div class="step-text">Enviá un mail a <a href="mailto:registroacademicouaco@gmail.com" style="color:var(--cian-dark);font-weight:600;">registroacademicouaco@gmail.com</a> con tu nombre completo, DNI y número de transacción.</div></li>
+          <li><div class="step-num">6</div><div class="step-text">El certificado será enviado a tu correo electrónico.</div></li>
+        </ol>
+        <div class="tip">💡 Asegurate de tener actualizado tu correo en el SIU Guaraní.</div>
+        <div style="margin-top:16px;"><a href="https://drive.google.com/file/d/1hlKWaghukvKfd5zesIWKcyOyfWX71hrD/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:#ff0000;color:white;padding:12px 20px;border-radius:30px;text-decoration:none;font-weight:600;font-size:0.95rem;">▶ Ver video tutorial</a></div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggle(this)">
+        <span><span class="icon">✏️</span>Cómo inscribirse en mesas de examen</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <ol class="steps">
+          <li><div class="step-num">1</div><div class="step-text">Ingresá al SIU Guaraní con tu número de legajo y contraseña.</div></li>
+          <li><div class="step-num">2</div><div class="step-text">Andá a <strong>Exámenes → Inscripción a exámenes</strong>.</div></li>
+          <li><div class="step-num">3</div><div class="step-text">Verificá que estés dentro del período de inscripción.</div></li>
+          <li><div class="step-num">4</div><div class="step-text">Seleccioná la materia y la fecha de mesa en que querés rendir.</div></li>
+          <li><div class="step-num">5</div><div class="step-text">Confirmá y guardá el comprobante de inscripción.</div></li>
+        </ol>
+        <div class="tip">💡 Verificá que tenés la regularidad vigente de la materia antes de inscribirte.</div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggle(this)">
+        <span><span class="icon">📊</span>Cómo ver el historial académico</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <ol class="steps">
+          <li><div class="step-num">1</div><div class="step-text">Ingresá al SIU Guaraní con tu número de legajo y contraseña.</div></li>
+          <li><div class="step-num">2</div><div class="step-text">Andá a <strong>Consultas → Historia Académica</strong>.</div></li>
+          <li><div class="step-num">3</div><div class="step-text">Allí verás todas las materias aprobadas con su calificación y forma de aprobación.</div></li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggle(this)">
+        <span><span class="icon">✉️</span>Cómo cambiar el correo electrónico</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <ol class="steps">
+          <li><div class="step-num">1</div><div class="step-text">Ingresá al SIU Guaraní con tu número de legajo y contraseña.</div></li>
+          <li><div class="step-num">2</div><div class="step-text">Andá a <strong>Matrícula → Cambiar datos censales</strong>.</div></li>
+          <li><div class="step-num">3</div><div class="step-text">En el campo <strong>"Email"</strong>, escribí tu nuevo correo electrónico.</div></li>
+          <li><div class="step-num">4</div><div class="step-text">Hacé clic en <strong>"Grabar"</strong> hasta que aparezca el mensaje de confirmación.</div></li>
+        </ol>
+        <div class="tip">💡 Usá un correo al que tengas acceso frecuente, ya que las notificaciones académicas se envían ahí.</div>
+        <div style="margin-top:16px;"><a href="https://drive.google.com/file/d/1RjJ3uNmRgrnD8CwSzPbp01c6Kci957y1/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:#ff0000;color:white;padding:12px 20px;border-radius:30px;text-decoration:none;font-weight:600;font-size:0.95rem;">▶ Ver video tutorial</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TRÁMITES FRECUENTES ===== -->
+  <div class="section" id="tramites">
+    <div class="section-title">📋 Trámites frecuentes</div>
+
+    <div class="tramite-card">
+      <div class="tramite-header" onclick="toggleTramite(this)">
+        <span>🔑 Recuperar contraseña olvidada <span class="tramite-tag tag-bimodal">Unpabimodal</span><span class="tramite-tag tag-guarani">SIU Guaraní</span></span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="tramite-body">
+        <p style="margin:12px 0;font-size:0.95rem;line-height:1.6;"><strong>En el Unpabimodal:</strong> Si olvidaste tu contraseña, contactá a la Dirección de Educación a Distancia en <a href="mailto:info.distancia@uaco.unpa.edu.ar" style="color:var(--cian-dark);font-weight:600;">info.distancia@uaco.unpa.edu.ar</a> o al teléfono (0297) 485-4888 int. 119.</p>
+        <p style="margin:12px 0;font-size:0.95rem;line-height:1.6;"><strong>En el SIU Guaraní:</strong> Contactá al Departamento de Alumnos al teléfono <strong>(0297) 485-4888 interno 112</strong> o por correo a <a href="mailto:aguzman@uaco.unpa.edu.ar" style="color:var(--cian-dark);font-weight:600;">aguzman@uaco.unpa.edu.ar</a> / <a href="mailto:nfranco@uaco.unpa.edu.ar" style="color:var(--cian-dark);font-weight:600;">nfranco@uaco.unpa.edu.ar</a></p>
+        <div class="tip">💡 Recordá que la contraseña inicial en ambos sistemas es tu número de DNI.</div>
+      </div>
+    </div>
+
+    <div class="tramite-card">
+      <div class="tramite-header" onclick="toggleTramite(this)">
+        <span>📋 Reinscripción anual a la carrera <span class="tramite-tag tag-guarani">SIU Guaraní</span></span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="tramite-body">
+        <ol class="steps" style="margin-top:12px;">
+          <li><div class="step-num">1</div><div class="step-text">Ingresá al SIU Guaraní dentro del período de reinscripción (consultá el calendario académico).</div></li>
+          <li><div class="step-num">2</div><div class="step-text">Andá a <strong>Matrícula → Reinscripción</strong>.</div></li>
+          <li><div class="step-num">3</div><div class="step-text">Confirmá tus datos y finalizá el trámite.</div></li>
+        </ol>
+        <div class="tip">💡 Sin reinscripción no podés inscribirte a materias. Hacélo dentro de las fechas establecidas.</div>
+      </div>
+    </div>
+
+    <div class="tramite-card">
+      <div class="tramite-header" onclick="toggleTramite(this)">
+        <span>🔄 Readmisión a la carrera <span class="tramite-tag tag-guarani">SIU Guaraní</span></span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="tramite-body">
+        <p style="margin:12px 0;font-size:0.95rem;line-height:1.6;">Si no cumpliste con las condiciones de permanencia establecidas por la Universidad, debés realizar el trámite de readmisión para reincorporarte a la carrera.</p>
+        <ol class="steps">
+          <li><div class="step-num">1</div><div class="step-text">Contactá a la Secretaría Académica de la Unidad Académica Caleta Olivia.</div></li>
+          <li><div class="step-num">2</div><div class="step-text">Consultá los requisitos y plazos para tu situación particular.</div></li>
+        </ol>
+        <div class="tip">💡 Ante cualquier duda sobre tu situación académica, consultá antes de que venza el plazo de reinscripción.</div>
+      </div>
+    </div>
+
+    <div class="tramite-card">
+      <div class="tramite-header" onclick="toggleTramite(this)">
+        <span>📜 Solicitar certificado de alumno regular <span class="tramite-tag tag-guarani">SIU Guaraní</span></span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="tramite-body">
+        <p style="margin:12px 0;font-size:0.95rem;line-height:1.6;">Podés solicitar el certificado directamente desde el SIU Guaraní. Ver guía completa en la pestaña <strong>"SIU Guaraní"</strong>.</p>
+        <div class="tip">💡 El certificado se envía al correo registrado en el sistema. Verificá que esté actualizado.</div>
+      </div>
+    </div>
+
+    <div class="tramite-card">
+      <div class="tramite-header" onclick="toggleTramite(this)">
+        <span>📧 Actualizar correo electrónico <span class="tramite-tag tag-guarani">SIU Guaraní</span></span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="tramite-body">
+        <p style="margin:12px 0;font-size:0.95rem;line-height:1.6;">Podés actualizar tu correo desde el SIU Guaraní en cualquier momento. Ver guía completa en la pestaña <strong>"SIU Guaraní"</strong>.</p>
+        <div class="tip">💡 Mantené tu correo actualizado para recibir notificaciones, certificados y comunicados institucionales.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== PREGUNTAS FRECUENTES ===== -->
+  <div class="section" id="faq">
+    <div class="section-title">❓ Preguntas frecuentes</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>¿Cuál es mi usuario para ingresar al Unpabimodal y al SIU Guaraní?</span><span class="arrow">▼</span></div>
+      <div class="faq-a">Tu usuario es tu <strong>número de legajo universitario</strong> (ej: 1-25698789/26). Es el mismo para ambos sistemas y no cambia durante toda tu carrera. La contraseña inicial es tu número de <strong>DNI</strong>.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>¿Qué hago si olvidé mi contraseña?</span><span class="arrow">▼</span></div>
+      <div class="faq-a">
+        <p style="margin:0 0 8px;"><strong>Para el Unpabimodal:</strong> Contactá a la Dirección de Educación a Distancia en <a href="mailto:info.distancia@uaco.unpa.edu.ar" style="color:var(--cian-dark);font-weight:600;">info.distancia@uaco.unpa.edu.ar</a> o al (0297) 485-4888 int. 119.</p>
+        <p style="margin:0;"><strong>Para el SIU Guaraní:</strong> Contactá al Departamento de Alumnos al (0297) 485-4888 interno 112 o por correo a <a href="mailto:aguzman@uaco.unpa.edu.ar" style="color:var(--cian-dark);font-weight:600;">aguzman@uaco.unpa.edu.ar</a> / <a href="mailto:nfranco@uaco.unpa.edu.ar" style="color:var(--cian-dark);font-weight:600;">nfranco@uaco.unpa.edu.ar</a></p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>¿Cuándo tengo que reinscribirme a la carrera?</span><span class="arrow">▼</span></div>
+      <div class="faq-a">La reinscripción es anual y se realiza desde el <strong>SIU Guaraní</strong> dentro de las fechas establecidas en el <strong>Calendario Académico</strong>. Sin reinscripción no podés inscribirte a materias.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>¿Qué diferencia hay entre regularidad, promoción y estar libre?</span><span class="arrow">▼</span></div>
+      <div class="faq-a">
+        <strong>Regular:</strong> cumpliste los requisitos mínimos de cursada y podés rendir el examen final.<br>
+        <strong>Promoción:</strong> aprobaste la materia sin rendir final, por alcanzar las calificaciones requeridas durante la cursada. De todas formas debés inscribirte en la mesa de examen para que el docente cargue la nota.<br>
+        <strong>Libre:</strong> no alcanzaste la regularidad y debés rendir con condiciones más amplias. Revisá siempre el programa de la asignatura.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>¿Dónde veo las fechas de exámenes finales?</span><span class="arrow">▼</span></div>
+      <div class="faq-a">Las fechas de las mesas de examen están publicadas en el <strong>Calendario Académico</strong> disponible en el portal institucional de la UNPA. También podés verlas en el SIU Guaraní al momento de inscribirte.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>¿Tengo que inscribirme aunque haya promocionado una materia?</span><span class="arrow">▼</span></div>
+      <div class="faq-a">Sí. Aunque hayas promocionado, <strong>debés inscribirte en la mesa de examen</strong> para que el docente pueda cargar la calificación en el sistema.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>¿Cómo me comunico con el docente?</span><span class="arrow">▼</span></div>
+      <div class="faq-a">Podés comunicarte a través del <strong>foro de consultas</strong> de la asignatura en el Unpabimodal o por la <strong>mensajería interna</strong> de la plataforma. Revisá el programa de la materia para conocer los canales de comunicación habilitados por la cátedra.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>¿Dónde encuentro los materiales de estudio?</span><span class="arrow">▼</span></div>
+      <div class="faq-a">Los materiales están dentro del <strong>aula virtual</strong> de cada asignatura en el Unpabimodal. Ingresá a <strong>"Mis Cursos"</strong> y accedé a la materia correspondiente. Recordá descargar los materiales antes de que finalice el cuatrimestre, ya que el aula se resetea.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>¿Cuándo se dictan las clases por Zoom?</span><span class="arrow">▼</span></div>
+      <div class="faq-a">Las fechas y horarios de las clases virtuales por Zoom son definidos por cada docente. Los enlaces y cronogramas se publican en el <strong>aula virtual</strong> de la materia o se envían por <strong>mensajería interna</strong>. Revisá el aula regularmente para no perderte ninguna novedad.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>¿Dónde puedo pedir ayuda si tengo problemas técnicos con el Unpabimodal?</span><span class="arrow">▼</span></div>
+      <div class="faq-a">Contactá a la <strong>Dirección de Educación a Distancia</strong>: <a href="mailto:info.distancia@uaco.unpa.edu.ar" style="color:var(--cian-dark);font-weight:600;">info.distancia@uaco.unpa.edu.ar</a> o al (0297) 485-4888 interno 119. También podés usar el <strong>Foro de asistencia para alumnos no presenciales</strong> dentro del Unpabimodal.</div>
+    </div>
+
+  </div>
+
+  <!-- ===== GLOSARIO ===== -->
+  <div class="section" id="glosario">
+    <div class="section-title">📖 Glosario de términos</div>
+
+    <div class="gl-header">
+      <div class="gl-badge">UNPABIMODAL</div>
+      <h3>&#128218; Glosario de términos del aula virtual</h3>
+      <p>Conocé el significado de los términos más usados en tu experiencia como estudiante virtual</p>
+    </div>
+
+    <div style="margin-bottom:1rem;">
+      <input type="text" id="gl-buscador" placeholder="&#128269; Buscá un término..." oninput="glFiltrar()"
+        style="width:100%;box-sizing:border-box;padding:8px 14px;border-radius:8px;border:1px solid #ccc;font-size:14px;font-family:'Segoe UI',sans-serif;" />
+    </div>
+
+    <div class="gl-filtros" id="gl-filtros">
+      <button class="gl-btn activo" onclick="glFiltrarCat('all',this)">Todos</button>
+      <button class="gl-btn" onclick="glFiltrarCat('plataforma',this)">&#128994; Plataforma</button>
+      <button class="gl-btn" onclick="glFiltrarCat('comunicacion',this)">&#128309; Comunicación</button>
+      <button class="gl-btn" onclick="glFiltrarCat('actividades',this)">&#128992; Actividades</button>
+      <button class="gl-btn" onclick="glFiltrarCat('perfil',this)">&#128995; Perfil y acceso</button>
+      <button class="gl-btn" onclick="glFiltrarCat('academico',this)">&#128308; Gestión académica</button>
+    </div>
+
+    <div class="gl-letras" id="gl-letras"></div>
+    <div class="gl-contador" id="gl-contador"></div>
+    <div id="gl-lista"></div>
+    <div id="gl-sin-resultados" style="text-align:center;color:#aaa;font-size:14px;padding:2rem;display:none;">No se encontraron términos.</div>
+  </div>
+
+  <!-- ===== CONTACTO ===== -->
+  <div class="section" id="contacto">
+    <div class="section-title">📞 Contacto y soporte</div>
+
+    <div class="contacto-grid">
+      <div class="contacto-card">
+        <div class="icono">💻</div>
+        <h3>Dirección de Educación a Distancia</h3>
+        <p>Soporte técnico y pedagógico sobre el uso del Unpabimodal.</p>
+        <p style="margin-top:8px;">
+          ✉️ <a href="mailto:info.distancia@uaco.unpa.edu.ar">info.distancia@uaco.unpa.edu.ar</a><br>
+          📞 (0297) 485-4888 int. 119
+        </p>
+        <a class="btn-contacto" href="mailto:info.distancia@uaco.unpa.edu.ar">Enviar consulta</a>
+      </div>
+      <div class="contacto-card" style="grid-column: span 2;">
+        <div class="icono">🎓</div>
+        <h3>Departamento de Alumnos</h3>
+        <p style="margin-bottom:10px;">📞 (0297) 485-4888 interno 112</p>
+        <table style="width:100%;font-size:0.85rem;border-collapse:collapse;text-align:left;">
+          <tr style="border-bottom:1px solid #eee;">
+            <td style="padding:7px 8px;color:#555;">Consultas / Preinscripciones / Ingresos</td>
+            <td style="padding:7px 8px;"><a href="mailto:nfranco@uaco.unpa.edu.ar" style="color:var(--cian-dark);font-weight:600;">nfranco@uaco.unpa.edu.ar</a></td>
+          </tr>
+          <tr style="border-bottom:1px solid #eee;">
+            <td style="padding:7px 8px;color:#555;">Consultas sobre Exámenes / Regularidades</td>
+            <td style="padding:7px 8px;"><a href="mailto:enoel@uaco.unpa.edu.ar" style="color:var(--cian-dark);font-weight:600;">enoel@uaco.unpa.edu.ar</a></td>
+          </tr>
+          <tr style="border-bottom:1px solid #eee;">
+            <td style="padding:7px 8px;color:#555;">Consultas e Inscripción por Art. 7mo</td>
+            <td style="padding:7px 8px;"><a href="mailto:secacademica@uaco.unpa.edu.ar" style="color:var(--cian-dark);font-weight:600;">secacademica@uaco.unpa.edu.ar</a></td>
+          </tr>
+          <tr style="border-bottom:1px solid #eee;">
+            <td style="padding:7px 8px;color:#555;">Exámenes / Emisión de Certificados</td>
+            <td style="padding:7px 8px;"><a href="mailto:registroacademicouaco@gmail.com" style="color:var(--cian-dark);font-weight:600;">registroacademicouaco@gmail.com</a></td>
+          </tr>
+          <tr style="border-bottom:1px solid #eee;">
+            <td style="padding:7px 8px;color:#555;">Trámite de Equivalencias</td>
+            <td style="padding:7px 8px;"><a href="mailto:equivalenciasuaco@gmail.com" style="color:var(--cian-dark);font-weight:600;">equivalenciasuaco@gmail.com</a></td>
+          </tr>
+          <tr style="border-bottom:1px solid #eee;">
+            <td style="padding:7px 8px;color:#555;">Trámite de Títulos (Egresados UACO)</td>
+            <td style="padding:7px 8px;"><a href="mailto:titulosuaco@gmail.com" style="color:var(--cian-dark);font-weight:600;">titulosuaco@gmail.com</a></td>
+          </tr>
+          <tr>
+            <td style="padding:7px 8px;color:#555;">Programas Analíticos</td>
+            <td style="padding:7px 8px;"><a href="mailto:programasuaco@gmail.com" style="color:var(--cian-dark);font-weight:600;">programasuaco@gmail.com</a></td>
+          </tr>
+        </table>
+      </div>
+      <div class="contacto-card">
+        <div class="icono">🌐</div>
+        <h3>Accesos rápidos</h3>
+        <p>
+          <a href="http://guarani3w.uaco.unpa.edu.ar/G3w/www/inicial.php" target="_blank">→ SIU Guaraní</a><br>
+          <a href="https://www.unpa.edu.ar/pagina/calendario-academico-2026" target="_blank">→ Calendario Académico 2026</a><br>
+          <a href="https://unpabimodal.unpa.edu.ar" target="_blank">→ Unpabimodal</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /content -->
+
+<footer>
+  <strong>Universidad Nacional de la Patagonia Austral</strong> · Unidad Académica Caleta Olivia<br>
+  Dirección de Educación a Distancia<br>
+  📞 (0297) 485-4888 Interno 119 &nbsp;·&nbsp; ✉️ <a href="mailto:info.distancia@uaco.unpa.edu.ar" style="color:var(--cian-dark);">info.distancia@uaco.unpa.edu.ar</a>
+</footer>
+
+<script>
+  /* ---- TABS ---- */
+  function showTab(id, btn) {
+    document.querySelectorAll('.section').forEach(function(s){ s.classList.remove('active'); });
+    document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  /* ---- ACORDEÓN GUÍAS ---- */
+  function toggle(header) {
+    var body = header.nextElementSibling;
+    var isOpen = body.classList.contains('open');
+    document.querySelectorAll('.accordion-body').forEach(function(b){ b.classList.remove('open'); });
+    document.querySelectorAll('.accordion-header').forEach(function(h){ h.classList.remove('open'); });
+    if (!isOpen) { body.classList.add('open'); header.classList.add('open'); }
+  }
+
+  /* ---- ACORDEÓN TRÁMITES ---- */
+  function toggleTramite(header) {
+    var body = header.nextElementSibling;
+    var isOpen = body.classList.contains('open');
+    document.querySelectorAll('.tramite-body').forEach(function(b){ b.classList.remove('open'); });
+    document.querySelectorAll('.tramite-header').forEach(function(h){ h.classList.remove('open'); });
+    if (!isOpen) { body.classList.add('open'); header.classList.add('open'); }
+  }
+
+  /* ---- FAQ ---- */
+  function toggleFaq(q) {
+    var a = q.nextElementSibling;
+    var isOpen = a.classList.contains('open');
+    document.querySelectorAll('.faq-a').forEach(function(x){ x.classList.remove('open'); });
+    document.querySelectorAll('.faq-q').forEach(function(x){ x.classList.remove('open'); });
+    if (!isOpen) { a.classList.add('open'); q.classList.add('open'); }
+  }
+
+  /* ---- BÚSQUEDA GLOBAL ---- */
+  // Sección de resultados de búsqueda - se inyecta dinámicamente
+  var searchSection = null;
+
+  function filterAccordions() {
+    var q = document.getElementById('searchInput').value.toLowerCase().trim();
+
+    // Limpiar o crear sección de resultados
+    if (!searchSection) {
+      searchSection = document.createElement('div');
+      searchSection.id = 'search-results-section';
+      searchSection.className = 'section';
+      document.querySelector('.content').appendChild(searchSection);
+    }
+
+    if (q.length < 2) {
+      // Restaurar vista normal: mostrar solo la primera sección
+      searchSection.style.display = 'none';
+      document.querySelectorAll('.section:not(#search-results-section)').forEach(function(s){ s.classList.remove('active'); });
+      document.querySelector('.section:not(#search-results-section)').classList.add('active');
+      document.querySelectorAll('.tab-btn').forEach(function(b,i){ b.classList.toggle('active', i===0); });
+      return;
+    }
+
+    // Ocultar secciones normales y mostrar resultados
+    document.querySelectorAll('.section:not(#search-results-section)').forEach(function(s){ s.classList.remove('active'); });
+    document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+    searchSection.style.display = 'block';
+    searchSection.classList.add('active');
+
+    // Recolectar resultados de acordeones (guías, trámites)
+    var resultados = [];
+    document.querySelectorAll('.accordion, .tramite-card, .faq-item').forEach(function(el) {
+      var texto = el.innerText.toLowerCase();
+      if (texto.includes(q)) {
+        // Obtener título y cuerpo
+        var headerEl = el.querySelector('.accordion-header, .tramite-header, .faq-q');
+        var bodyEl = el.querySelector('.accordion-body, .tramite-body, .faq-a');
+        if (headerEl && bodyEl) {
+          resultados.push({
+            titulo: headerEl.innerText.replace('▼','').trim(),
+            cuerpo: bodyEl.innerHTML
+          });
+        }
+      }
+    });
+
+    // Recolectar resultados del glosario
+    var glResultados = glTerminos.filter(function(t){
+      return t.nombre.toLowerCase().includes(q) || t.def.toLowerCase().includes(q);
+    });
+
+    // Recolectar resultados de FAQ
+    var totalResultados = resultados.length + glResultados.length;
+
+    // Renderizar
+    var html = '<div class="section-title">🔍 Resultados para "<strong>' + q + '</strong>" — ' + totalResultados + ' encontrado' + (totalResultados !== 1 ? 's' : '') + '</div>';
+
+    if (totalResultados === 0) {
+      html += '<div style="text-align:center;padding:2rem;color:#888;font-size:14px;">No se encontraron resultados. Probá con otra palabra.</div>';
+    }
+
+    if (resultados.length > 0) {
+      resultados.forEach(function(r) {
+        html += '<div class="accordion" style="margin-bottom:14px;">'
+          + '<div class="accordion-header open" onclick="toggle(this)" style="background:var(--cian-soft);">'
+          + '<span>' + r.titulo + '</span><span class="arrow" style="transform:rotate(180deg);">▼</span></div>'
+          + '<div class="accordion-body open">' + r.cuerpo + '</div></div>';
+      });
+    }
+
+    if (glResultados.length > 0) {
+      html += '<div class="section-title" style="margin-top:20px;">📖 Términos del glosario</div>';
+      glResultados.forEach(function(t) {
+        var bg = { plataforma:'#E1F5EE', comunicacion:'#E6F1FB', actividades:'#FAEEDA', perfil:'#EEEDFE', academico:'#FCEBEB' };
+        var co = { plataforma:'#085041', comunicacion:'#0C447C', actividades:'#633806', perfil:'#3C3489', academico:'#791F1F' };
+        var cats = { plataforma:'Plataforma', comunicacion:'Comunicación', actividades:'Actividades', perfil:'Perfil y acceso', academico:'Gestión académica' };
+        html += '<div class="gl-card"><div class="gl-card-top"><p class="gl-nombre">' + t.nombre + '</p>'
+          + '<span class="gl-cat" style="background:' + (bg[t.cat]||'#eee') + ';color:' + (co[t.cat]||'#333') + ';">' + (cats[t.cat]||t.cat) + '</span></div>'
+          + '<p class="gl-def">' + t.def + '</p></div>';
+      });
+    }
+
+    searchSection.innerHTML = html;
+  }
+
+  /* ---- GLOSARIO ---- */
+  var glTerminos = [
+    { nombre: "Actividad", cat: "actividades", def: "Consigna o tarea que el estudiante debe realizar dentro del aula virtual, como cuestionarios, entregas de trabajos o participaciones en foros." },
+    { nombre: "Alumno libre", cat: "academico", def: "Estudiante que no obtuvo la regularidad en una asignatura y debe rendir el examen final bajo las condiciones establecidas por la cátedra. Siempre revisá las condiciones en el programa de la asignatura." },
+    { nombre: "Alumno regular", cat: "academico", def: "Estudiante que cumple con los requisitos académicos establecidos por la Universidad y mantiene vigente su condición de alumno." },
+    { nombre: "Archivo adjunto", cat: "actividades", def: "Documento, imagen u otro archivo que se incorpora a una actividad, foro o mensaje dentro del aula virtual." },
+    { nombre: "Aula virtual", cat: "plataforma", def: "Espacio de cursado en el Unpabimodal donde se desarrollan las asignaturas. Aquí encontrás los materiales, actividades, foros y recursos de cada materia." },
+    { nombre: "Bibliografía", cat: "actividades", def: "Material de estudio recomendado u obligatorio para una asignatura, indicado por el docente en el programa de la materia." },
+    { nombre: "Calendario académico", cat: "academico", def: "Cronograma oficial emitido por la Universidad que establece las fechas clave del año lectivo: inicio y fin de cuatrimestres, períodos de inscripción, recesos, mesas de examen y demás actividades académicas." },
+    { nombre: "Campus virtual (Unpabimodal)", cat: "plataforma", def: "Plataforma educativa de la Universidad Nacional de la Patagonia Austral (UNPA) utilizada para cursar asignaturas en modalidad virtual o con apoyo tecnológico." },
+    { nombre: "Certificado de alumno regular", cat: "academico", def: "Documento que acredita que el estudiante posee la condición de alumno regular en la Universidad. Puede descargarse desde el SIU Guaraní y suele solicitarse para realizar distintos trámites." },
+    { nombre: "Comisión", cat: "academico", def: "Grupo de estudiantes que cursa una misma asignatura con un docente, en un horario o modalidad determinada." },
+    { nombre: "Contraseña", cat: "perfil", def: "Clave personal que usás junto a tu usuario para ingresar al Unpabimodal. Se recomienda cambiarla la primera vez que accedés y mantenerla en un lugar seguro." },
+    { nombre: "Correlativas", cat: "academico", def: "Asignaturas que deben aprobarse o regularizarse previamente para poder cursar o rendir otra materia, según lo establece el plan de estudios de la carrera." },
+    { nombre: "Credenciales", cat: "perfil", def: "Usuario (número de legajo) y contraseña necesarios para acceder al Unpabimodal y al SIU Guaraní." },
+    { nombre: "Cuestionario", cat: "actividades", def: "Actividad de evaluación realizada dentro del aula virtual con preguntas de opción múltiple, verdadero/falso u otros formatos. Tiene fecha y hora límite, y en algunos casos un tiempo máximo para completarse." },
+    { nombre: "Descarga de materiales", cat: "plataforma", def: "Acción de obtener en tu dispositivo los archivos publicados por el docente en el aula virtual, como PDFs, presentaciones o guías de estudio." },
+    { nombre: "Dirección de Educación a Distancia", cat: "plataforma", def: "Equipo institucional de la UNPA que brinda soporte técnico y pedagógico sobre el uso del Unpabimodal a estudiantes y docentes. Podés contactarlos en info.distancia@uaco.unpa.edu.ar" },
+    { nombre: "Docente tutor", cat: "comunicacion", def: "Profesor responsable del acompañamiento académico de la asignatura dentro del aula virtual. Es el referente para consultas sobre contenidos, actividades y evaluaciones." },
+    { nombre: "Entrega de tareas", cat: "actividades", def: "Envío de actividades y trabajos prácticos mediante el maletín de tareas del Unpabimodal. Tiene fecha límite y el docente devuelve una calificación con comentarios." },
+    { nombre: "Estado académico", cat: "academico", def: "Situación del estudiante respecto a sus materias: puede ser regular, libre, promocionado o aprobado, según los requisitos cumplidos en cada asignatura." },
+    { nombre: "Examen final", cat: "academico", def: "Instancia de evaluación que permite aprobar una asignatura cuando se obtuvo la condición de regular. Se rinde en las fechas establecidas por el Calendario Académico y requiere inscripción previa en SIU Guaraní." },
+    { nombre: "Foro", cat: "comunicacion", def: "Espacio de comunicación dentro del aula virtual donde estudiantes y docentes intercambian mensajes, consultas e información. Puede ser de presentación, debate, seguimiento o consultas generales." },
+    { nombre: "Foro de asistencia para alumnos no presenciales", cat: "comunicacion", def: "Espacio institucional dentro del aula virtual destinado a consultas administrativas de estudiantes de carreras a distancia." },
+    { nombre: "Guía de estudio", cat: "actividades", def: "Documento elaborado por el docente con orientaciones para organizar el aprendizaje de una unidad temática." },
+    { nombre: "Inscripción a materias", cat: "academico", def: "Trámite realizado desde el SIU Guaraní para quedar habilitado para cursar una asignatura en el ciclo lectivo." },
+    { nombre: "Inscripción a mesas de examen", cat: "academico", def: "Proceso mediante el cual el estudiante se registra en el SIU Guaraní para rendir un examen final. Debe realizarse dentro de los plazos establecidos en el calendario académico." },
+    { nombre: "Ingreso al aula virtual", cat: "plataforma", def: "Acceso al espacio de una asignatura dentro del Unpabimodal mediante las credenciales (usuario y contraseña) asignadas por la Universidad." },
+    { nombre: "Lección", cat: "actividades", def: "Recurso de aprendizaje del Unpabimodal que presenta contenidos organizados de forma secuencial, permitiendo avanzar paso a paso por el material." },
+    { nombre: "Maletín de cuestionarios", cat: "actividades", def: "Espacio dentro del aula virtual donde se encuentran las evaluaciones o cuestionarios en línea disponibles para el estudiante." },
+    { nombre: "Maletín de tareas", cat: "actividades", def: "Herramienta del Unpabimodal destinada a la entrega de trabajos prácticos. Es el espacio donde subís tus archivos en respuesta a las consignas del docente." },
+    { nombre: "Material de estudio", cat: "plataforma", def: "Recursos digitales proporcionados por el docente en el aula virtual: PDFs, videos, presentaciones, enlaces y otros archivos necesarios para el cursado." },
+    { nombre: "Mensajería interna", cat: "comunicacion", def: "Sistema de mensajes privados dentro del Unpabimodal que te permite comunicarte directamente con docentes, tutores o compañeros, sin necesidad de usar correo electrónico externo." },
+    { nombre: "Mesas de examen", cat: "academico", def: "Períodos habilitados por la Universidad para que los estudiantes rindan exámenes finales. Las fechas se publican en el calendario académico y la inscripción se realiza a través del SIU Guaraní." },
+    { nombre: "Módulo", cat: "plataforma", def: "Unidad temática dentro del curso que agrupa materiales y actividades relacionados. Generalmente se organizan de forma secuencial y representan las semanas o bloques de contenido." },
+    { nombre: "Notificaciones", cat: "plataforma", def: "Avisos automáticos que el Unpabimodal envía a tu correo o dentro de la plataforma para informarte sobre nuevas actividades, mensajes, calificaciones o novedades del curso." },
+    { nombre: "Perfil de usuario", cat: "perfil", def: "Sección personal dentro del Unpabimodal donde podés ver y editar tu información: nombre, foto, descripción y correo electrónico." },
+    { nombre: "Plan de estudios", cat: "academico", def: "Documento oficial que organiza las asignaturas, correlativas y carga horaria de una carrera. Indica el orden en que deben cursarse las materias y los requisitos para avanzar." },
+    { nombre: "Programa de la asignatura", cat: "academico", def: "Documento elaborado por la cátedra que detalla los contenidos, objetivos, modalidad de evaluación, bibliografía y condiciones de aprobación de la materia. Es fundamental leerlo al inicio de cada cursada." },
+    { nombre: "Promoción", cat: "academico", def: "Forma de aprobación de una asignatura sin necesidad de rendir examen final, alcanzando determinadas calificaciones durante la cursada. Es necesario inscribirse en la mesa de examen para que el docente pueda cargar la nota." },
+    { nombre: "Readmisión", cat: "academico", def: "Trámite que debe realizar el estudiante cuando no cumplió las condiciones de permanencia establecidas por la Universidad, para poder reincorporarse a la carrera." },
+    { nombre: "Recurso", cat: "plataforma", def: "Materiales disponibles en el aula virtual que no requieren entrega: PDFs, videos, enlaces, presentaciones y otros archivos para leer o visualizar." },
+    { nombre: "Regularidad", cat: "academico", def: "Condición que obtiene el estudiante al cumplir con los requisitos mínimos de cursada de una asignatura, lo que le permite acceder al examen final." },
+    { nombre: "Reinscripción", cat: "academico", def: "Renovación anual de la condición de estudiante activo en la Universidad, realizada mediante el SIU Guaraní dentro de los plazos establecidos." },
+    { nombre: "SIU Guaraní", cat: "academico", def: "Sistema informático de gestión académica de la Universidad donde los estudiantes realizan trámites como reinscripción a la carrera, inscripción a materias, inscripción a mesas de examen y consulta de su historia académica. Es independiente del Unpabimodal." },
+    { nombre: "Sincronización de datos", cat: "plataforma", def: "Actualización de la información entre el SIU Guaraní y el Unpabimodal. Permite que los cambios en el sistema académico se reflejen en la plataforma virtual." },
+    { nombre: "Tarea", cat: "actividades", def: "Actividad que el estudiante debe completar y enviar a través del aula virtual, generalmente como archivo adjunto, en respuesta a una consigna del docente." },
+    { nombre: "Tema", cat: "plataforma", def: "Unidad o bloque de contenidos dentro de una asignatura en el aula virtual. Agrupa los materiales y actividades correspondientes a una parte del programa." },
+    { nombre: "Tutoría virtual", cat: "comunicacion", def: "Instancia de acompañamiento académico o técnico ofrecida por docentes o tutores a través del aula virtual, foros o mensajería. Puede ser sincrónica (en tiempo real) o asincrónica." },
+    { nombre: "Unpabimodal", cat: "plataforma", def: "Plataforma educativa virtual de la Universidad Nacional de la Patagonia Austral (UNPA), basada en Moodle. Es el entorno donde se desarrollan todas las actividades académicas de las carreras virtuales." },
+    { nombre: "Usuario", cat: "perfil", def: "Es tu número de legajo universitario, el cual te identifica en el sistema para iniciar sesión. Por ejemplo: 1-25698789/26. Este número no cambia durante toda tu vida académica en la UNPA." },
+    { nombre: "Video conferencia", cat: "comunicacion", def: "Encuentro virtual entre docentes y estudiantes mediante plataformas de comunicación sincrónica. Se usa para clases en vivo, consultas y tutorías." },
+    { nombre: "Vista de calificaciones", cat: "actividades", def: "Espacio dentro del aula virtual donde el estudiante puede consultar las notas obtenidas en las actividades, tareas y cuestionarios del curso." },
+    { nombre: "Zoom", cat: "comunicacion", def: "Plataforma de videoconferencia utilizada generalmente para el dictado de clases virtuales en la UNPA. Los enlaces de acceso son compartidos por los docentes a través del aula virtual o por mensajería interna." }
+  ];
+
+  glTerminos.sort(function(a,b){ return a.nombre.localeCompare(b.nombre,'es'); });
+  var glCatActual = 'all';
+
+  function glEtiqueta(cat) {
+    return { plataforma:'Plataforma', comunicacion:'Comunicación', actividades:'Actividades', perfil:'Perfil y acceso', academico:'Gestión académica' }[cat] || cat;
+  }
+  function glColorCat(cat) {
+    var bg = { plataforma:'#E1F5EE', comunicacion:'#E6F1FB', actividades:'#FAEEDA', perfil:'#EEEDFE', academico:'#FCEBEB' };
+    var co = { plataforma:'#085041', comunicacion:'#0C447C', actividades:'#633806', perfil:'#3C3489', academico:'#791F1F' };
+    return 'background:'+(bg[cat]||'#eee')+';color:'+(co[cat]||'#333')+';';
+  }
+  function glRenderizar(lista) {
+    var c = document.getElementById('gl-lista');
+    var s = document.getElementById('gl-sin-resultados');
+    var k = document.getElementById('gl-contador');
+    if (!lista.length) { c.innerHTML=''; s.style.display='block'; k.innerHTML=''; return; }
+    s.style.display='none';
+    k.innerHTML = lista.length + ' término' + (lista.length!==1?'s':'') + ' encontrado' + (lista.length!==1?'s':'');
+    c.innerHTML = lista.map(function(t){
+      return '<div class="gl-card"><div class="gl-card-top"><p class="gl-nombre">'+t.nombre+'</p>'
+        +'<span class="gl-cat" style="'+glColorCat(t.cat)+'">'+glEtiqueta(t.cat)+'</span></div>'
+        +'<p class="gl-def">'+t.def+'</p></div>';
+    }).join('');
+  }
+  function glFiltrar() {
+    var q = document.getElementById('gl-buscador').value.toLowerCase().trim();
+    var lista = glTerminos.filter(function(t){ return glCatActual==='all'||t.cat===glCatActual; });
+    if (q) lista = lista.filter(function(t){ return t.nombre.toLowerCase().indexOf(q)!==-1||t.def.toLowerCase().indexOf(q)!==-1; });
+    glRenderizar(lista);
+  }
+  function glFiltrarCat(cat, btn) {
+    glCatActual = cat;
+    document.getElementById('gl-filtros').querySelectorAll('button').forEach(function(b){
+      b.classList.remove('activo');
+    });
+    btn.classList.add('activo');
+    document.getElementById('gl-buscador').value='';
+    glFiltrar();
+  }
+  function glIrLetra(letra) {
+    glCatActual='all';
+    document.getElementById('gl-filtros').querySelectorAll('button').forEach(function(b,i){
+      b.classList.remove('activo'); if(i===0) b.classList.add('activo');
+    });
+    document.getElementById('gl-buscador').value='';
+    glRenderizar(glTerminos.filter(function(t){ return t.nombre[0].toUpperCase()===letra; }));
+  }
+  function glBuildLetras() {
+    var nav = document.getElementById('gl-letras');
+    var disp = {};
+    glTerminos.forEach(function(t){ disp[t.nombre[0].toUpperCase()]=true; });
+    nav.innerHTML = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(function(l){
+      if (disp[l]) return '<button class="gl-letra" onclick="glIrLetra(\''+l+'\')">'+l+'</button>';
+      return '<button class="gl-letra" disabled>'+l+'</button>';
+    }).join('');
+  }
+  glBuildLetras();
+  glFiltrar();
+</script>
+</body>
+</html>
